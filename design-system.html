@@ -1,0 +1,655 @@
+<title>Tiny Template Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --p-bg:#ffffff; --p-surface:#f8f9f9; --p-surface2:#eaeef0;
+  --p-ink:#191a1b; --p-ink2:#4f5558; --p-ink3:#6f7274;
+  --p-rule:#dadcdd; --p-rule2:#c6c8c9;
+  --p-accent:#005a9a; --p-accent-soft:#f0f8fe; --p-accent-ink:#005a9a;
+  --p-green:#237662; --p-amber:#965618; --p-red:#9f362c;
+  --pv-bg:#ffffff; --pv-rule:#dadcdd; --pv-ink:#191a1b;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --p-bg:#131414; --p-surface:#191a1b; --p-surface2:#232526;
+    --p-ink:#eaeef0; --p-ink2:#dadcdd; --p-ink3:#b0b2b3;
+    --p-rule:#232526; --p-rule2:#4f5558;
+    --p-accent:#5faae0; --p-accent-soft:#002e4f; --p-accent-ink:#5faae0;
+    --p-green:#4caf90; --p-amber:#e2953a; --p-red:#c9655b;
+  }
+}
+:root[data-theme="dark"]{
+  --p-bg:#131414; --p-surface:#191a1b; --p-surface2:#232526;
+  --p-ink:#eaeef0; --p-ink2:#dadcdd; --p-ink3:#b0b2b3;
+  --p-rule:#232526; --p-rule2:#4f5558;
+  --p-accent:#5faae0; --p-accent-soft:#002e4f; --p-accent-ink:#5faae0;
+  --p-green:#4caf90; --p-amber:#e2953a; --p-red:#c9655b;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--p-bg);color:var(--p-ink);
+  font-family:"Public Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased}
+code,.tk,.tnums,.cdef{font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace}
+h1,h2,h3,h4,h5{font-family:Archivo,ui-sans-serif,system-ui,sans-serif;text-wrap:balance;margin:0}
+a{color:var(--p-accent-ink)}
+:focus-visible{outline:2px solid var(--p-accent);outline-offset:2px;border-radius:2px}
+
+/* ---- shell ---- */
+.shell{display:grid;grid-template-columns:200px minmax(0,1fr);gap:0;max-width:1240px;margin:0 auto}
+.rail{position:sticky;top:0;align-self:start;height:100vh;padding:34px 20px 34px 24px;
+  border-right:1px solid var(--p-rule);display:flex;flex-direction:column;gap:2px;overflow-y:auto}
+.rail .rt{font-family:Archivo;font-weight:700;font-size:12px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--p-ink3);margin-bottom:12px}
+.rail a{color:var(--p-ink2);text-decoration:none;font-size:13.5px;padding:5px 8px;border-radius:5px;line-height:1.35}
+.rail a:hover{background:var(--p-surface2);color:var(--p-ink)}
+main{padding:34px 40px 90px;min-width:0}
+@media (max-width:900px){
+  .shell{grid-template-columns:1fr}
+  .rail{position:sticky;top:0;height:auto;flex-direction:row;overflow-x:auto;z-index:5;
+    border-right:0;border-bottom:1px solid var(--p-rule);background:var(--p-bg);padding:10px 16px;gap:4px}
+  .rail .rt{display:none}
+  .rail a{white-space:nowrap;flex:0 0 auto}
+  main{padding:24px 18px 70px}
+}
+
+/* ---- header ---- */
+.eyebrow{font-family:"JetBrains Mono";font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--p-ink3)}
+h1{font-size:clamp(30px,4.4vw,45px);font-weight:700;letter-spacing:-.024em;line-height:1.07;margin:12px 0 0}
+.sub{max-width:64ch;color:var(--p-ink2);font-size:16.5px;margin:14px 0 0}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.pill{font-family:"JetBrains Mono";font-size:11.5px;padding:4px 9px;border:1px solid var(--p-rule);
+  border-radius:624px;color:var(--p-ink2);background:var(--p-surface)}
+.statrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:1px;background:var(--p-rule);
+  border:1px solid var(--p-rule);border-radius:8px;overflow:hidden;margin:26px 0 0}
+.stat{background:var(--p-bg);padding:14px 16px;display:flex;flex-direction:column;gap:1px}
+.sv{font-family:Archivo;font-weight:700;font-size:22px;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.sl{font-size:12px;color:var(--p-ink3);letter-spacing:.01em}
+
+/* ---- sections ---- */
+section{margin-top:64px;scroll-margin-top:80px}
+@media (max-width:900px){section{scroll-margin-top:64px}}
+.shead{display:flex;align-items:baseline;gap:12px;padding-bottom:12px;border-bottom:2px solid var(--p-ink);
+  margin-bottom:22px;flex-wrap:wrap}
+.shead h2{font-size:25px;font-weight:700;letter-spacing:-.018em}
+.shead .cnt{font-family:"JetBrains Mono";font-size:12px;color:var(--p-ink3);margin-left:auto}
+.lede{max-width:70ch;color:var(--p-ink2);margin:0 0 18px}
+h3{font-size:17px;font-weight:600;margin:34px 0 12px;letter-spacing:-.008em}
+h4{font-size:12px;font-weight:700;letter-spacing:.085em;text-transform:uppercase;color:var(--p-ink3);margin:0 0 10px}
+h5{font-size:14px;font-weight:600;margin:0 0 5px}
+.note{font-size:13px;color:var(--p-ink3);margin:-4px 0 10px;max-width:66ch}
+.callout{border-left:2px solid var(--p-accent);background:var(--p-surface);padding:13px 16px;
+  border-radius:0 6px 6px 0;margin:20px 0;max-width:74ch}
+.callout p{margin:0;font-size:13.5px;color:var(--p-ink2)}
+.callout code{font-size:12px;background:var(--p-surface2);padding:1px 4px;border-radius:3px}
+
+/* ---- mode toggle ---- */
+.modebar{position:sticky;top:0;z-index:4;display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  background:var(--p-bg);padding:12px 0;border-bottom:1px solid var(--p-rule);margin-bottom:4px}
+@media (max-width:900px){.modebar{top:47px}}
+.modebar .ml{font-family:"JetBrains Mono";font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--p-ink3)}
+.seg{display:inline-flex;border:1px solid var(--p-rule2);border-radius:8px;overflow:hidden;background:var(--p-surface)}
+.seg button{font-family:"Public Sans";font-size:13px;font-weight:500;padding:5px 14px;border:0;cursor:pointer;
+  background:transparent;color:var(--p-ink2)}
+.seg button[aria-pressed="true"]{background:var(--p-accent);color:#fff}
+:root[data-theme="dark"] .seg button[aria-pressed="true"]{color:#131414}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .seg button[aria-pressed="true"]{color:#131414}}
+
+/* ---- swatches ---- */
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:26px 32px}
+.grp{min-width:0}
+.swlist{display:flex;flex-direction:column;gap:3px}
+.srow{display:flex;align-items:center;gap:10px;min-width:0}
+.sw{width:26px;height:26px;border-radius:5px;flex:0 0 auto;background:var(--l);
+  box-shadow:inset 0 0 0 1px rgb(0 0 0 / .12)}
+[data-mode="dark"] .sw{background:var(--d);box-shadow:inset 0 0 0 1px rgb(255 255 255 / .16)}
+.tk{font-size:11.5px;color:var(--p-ink2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.hex{margin-left:auto;font-family:"JetBrains Mono";font-size:11px;color:var(--p-ink3);flex:0 0 auto;
+  font-variant-numeric:tabular-nums}
+.vd{display:none}
+[data-mode="dark"] .vl{display:none}
+[data-mode="dark"] .vd{display:inline}
+
+/* ---- preview surfaces (ground follows token mode, not page theme) ---- */
+.preview{background:var(--pv-bg);border:1px solid var(--pv-rule);border-radius:10px;padding:20px;color:var(--pv-ink)}
+[data-mode="dark"] .preview{--pv-bg:#191a1b;--pv-rule:#232526;--pv-ink:#eaeef0}
+.pvcap{font-family:"JetBrains Mono";font-size:11px;color:var(--p-ink3);margin:8px 0 0}
+
+/* ---- matrix ---- */
+.tblwrap{overflow-x:auto;max-width:100%}
+table.matrix{border-collapse:collapse;font-size:13px}
+table.matrix th{font-family:"JetBrains Mono";font-size:10.5px;font-weight:400;letter-spacing:.05em;
+  color:var(--p-ink3);text-transform:uppercase;padding:0 12px 9px;text-align:center;white-space:nowrap}
+table.matrix th.rh{text-align:right;padding:8px 14px 8px 0;text-transform:none;font-size:11.5px;color:var(--p-ink2)}
+table.matrix td{padding:5px 6px;text-align:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;font-family:"Public Sans";font-size:13px;font-weight:500;padding:7px 15px;
+  border-radius:6px;background:var(--l);color:var(--fgl);white-space:nowrap;border:1px solid transparent}
+[data-mode="dark"] .btn{background:var(--d);color:var(--fgd)}
+.btn-outlined{border-color:var(--ol)}
+[data-mode="dark"] .btn-outlined{border-color:var(--od)}
+.btn-text{background:transparent!important;color:var(--l);padding:7px 6px;text-decoration:underline;
+  text-underline-offset:3px;text-decoration-thickness:1px}
+[data-mode="dark"] .btn-text{color:var(--d)}
+
+/* ---- kv tables ---- */
+table.kv{border-collapse:collapse;font-size:13px;width:100%;max-width:520px}
+table.kv th{font-family:"JetBrains Mono";font-size:10.5px;font-weight:400;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--p-ink3);text-align:left;padding:0 14px 8px 0;border-bottom:1px solid var(--p-rule)}
+table.kv td{padding:5px 14px 5px 0;border-bottom:1px solid var(--p-rule);vertical-align:top}
+.tnums{font-family:"JetBrains Mono";font-size:11.5px;color:var(--p-ink3);font-variant-numeric:tabular-nums}
+
+/* ---- type specimens ---- */
+.tlist{display:flex;flex-direction:column;gap:0}
+.tspec{display:flex;align-items:baseline;gap:18px;padding:9px 0;border-bottom:1px solid var(--p-rule)}
+.tsample{font-family:Archivo;font-weight:500;color:var(--p-ink);flex:0 0 auto;min-width:78px;
+  overflow:hidden;max-height:74px;display:flex;align-items:baseline}
+.tmeta{display:flex;flex-direction:column;gap:1px;min-width:0}
+.tmeta .tk{white-space:normal}
+
+/* ---- spacing ---- */
+.splist{display:flex;flex-direction:column;gap:1px}
+.sp{display:flex;align-items:center;gap:12px}
+.sp .tk{flex:0 0 84px}
+.sptrack{flex:1 1 auto;min-width:0;display:block}
+.spbar{display:block;height:11px;background:var(--p-accent);border-radius:2px;min-width:2px;opacity:.85}
+.sp .tnums{flex:0 0 auto;text-align:right;white-space:nowrap}
+@media (max-width:560px){.sp .tk{flex:0 0 74px;font-size:10.5px}.sp .tnums{font-size:10.5px}}
+
+/* ---- radius ---- */
+.radlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:12px}
+.rad{display:flex;align-items:center;gap:9px;min-width:0}
+.radbox{width:30px;height:30px;flex:0 0 auto;background:var(--p-accent-soft);
+  box-shadow:inset 0 0 0 1.5px var(--p-accent)}
+.rad .tnums{margin-left:auto;padding-left:8px}
+.rad .tk{white-space:normal;overflow:visible;text-overflow:clip;line-height:1.3}
+
+/* ---- misc previews ---- */
+.row{display:flex;flex-wrap:wrap;gap:9px;align-items:center}
+.tag{font-family:"Public Sans";font-size:12px;font-weight:500;padding:3px 10px;border-radius:624px;
+  background:var(--l);color:var(--fgl)}
+[data-mode="dark"] .tag{background:var(--d);color:var(--fgd)}
+.alert{background:var(--l);color:var(--fgl);border:1px solid var(--ol);border-radius:8px;padding:10px 14px;
+  font-size:13px;margin-bottom:9px}
+[data-mode="dark"] .alert{background:var(--d);color:var(--fgd);border-color:var(--od)}
+.alert strong{font-weight:600}
+.ipwrap{display:flex;flex-direction:column;gap:5px;margin-bottom:11px}
+.iplabel{font-family:"JetBrains Mono";font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--p-ink3)}
+.ip{display:block;background:var(--l);color:var(--fgl);border:1px solid var(--ol);border-radius:6px;
+  padding:9px 12px;font-size:13.5px;max-width:290px}
+[data-mode="dark"] .ip{background:var(--d);color:var(--fgd);border-color:var(--od)}
+
+/* ---- architecture chain ---- */
+.chain{display:flex;flex-direction:column;gap:0;margin-bottom:22px}
+.clayer{border:1px solid var(--p-rule);border-radius:9px;padding:14px 17px;background:var(--p-surface);max-width:80ch}
+.cnum{font-family:"JetBrains Mono";font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--p-accent-ink);display:block;margin-bottom:7px}
+.cdef{font-size:12.5px;display:block;color:var(--p-ink);overflow-x:auto;white-space:nowrap;padding-bottom:2px}
+.cdef b{color:var(--p-accent-ink);font-weight:500}
+.clayer p{margin:8px 0 0;font-size:13px;color:var(--p-ink2)}
+.carrow{width:1px;height:20px;background:var(--p-rule2);margin-left:28px}
+
+/* ---- components ---- */
+.clist{display:flex;flex-wrap:wrap;gap:6px}
+.cchip{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--p-rule);border-radius:6px;
+  padding:4px 6px 4px 9px;background:var(--p-surface)}
+.cchip code{font-size:12px;color:var(--p-ink)}
+.cct{font-family:"JetBrains Mono";font-size:10px;color:var(--p-ink3);background:var(--p-surface2);
+  padding:1px 5px;border-radius:4px;font-variant-numeric:tabular-nums}
+.shadowdemo{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:18px;margin-top:6px}
+.shbox{background:var(--pv-bg,#fff);border-radius:9px;padding:18px 14px;font-family:"JetBrains Mono";font-size:11px;
+  color:var(--p-ink2);border:1px solid var(--p-rule)}
+/* ---- component previews ---- */
+.cgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:22px 30px;margin-bottom:8px}
+.cgroup h4{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.cgn{font-family:"JetBrains Mono";font-size:10px;color:var(--p-ink3);background:var(--p-surface2);
+  padding:1px 5px;border-radius:4px;letter-spacing:0}
+.iconbtn{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:6px;
+  background:var(--l);color:var(--fgl)}
+[data-mode="dark"] .iconbtn{background:var(--d);color:var(--fgd)}
+.pillbtn{display:inline-flex;align-items:center;padding:5px 14px;border-radius:624px;font-size:13px;
+  font-weight:500;background:var(--l);color:var(--fgl)}
+[data-mode="dark"] .pillbtn{background:var(--d);color:var(--fgd)}
+.tag{border:1px solid var(--ol,transparent)}
+[data-mode="dark"] .tag{border-color:var(--od,transparent)}
+.ctlgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:13px 20px}
+.ctl{display:flex;align-items:center;gap:9px;min-width:0}
+.ctl-lab{font-size:13px;color:var(--fgl)}
+[data-mode="dark"] .ctl-lab{color:var(--fgd)}
+.cbx{width:17px;height:17px;border-radius:4px;flex:0 0 auto;display:inline-flex;align-items:center;
+  justify-content:center;background:var(--l);box-shadow:inset 0 0 0 1.5px var(--ol,transparent)}
+.cbx.on{color:var(--fgl);box-shadow:none}
+[data-mode="dark"] .cbx{background:var(--d);box-shadow:inset 0 0 0 1.5px var(--od,transparent)}
+[data-mode="dark"] .cbx.on{color:var(--fgd);box-shadow:none}
+.rdo{width:17px;height:17px;border-radius:624px;flex:0 0 auto;display:inline-flex;align-items:center;
+  justify-content:center;box-shadow:inset 0 0 0 1.5px var(--ol)}
+[data-mode="dark"] .rdo{box-shadow:inset 0 0 0 1.5px var(--od)}
+.rdo .dot{width:8px;height:8px;border-radius:624px;background:var(--l)}
+[data-mode="dark"] .rdo .dot{background:var(--d)}
+.tgl{width:32px;height:18px;border-radius:624px;flex:0 0 auto;background:var(--l);position:relative;display:inline-block}
+[data-mode="dark"] .tgl{background:var(--d)}
+.tgl .knob{position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:624px;background:#fff;
+  box-shadow:0 1px 2px rgb(0 0 0 / .25)}
+.tgl.on .knob{left:auto;right:2px}
+.slider-ctl{grid-column:1/-1}
+.sld{position:relative;flex:0 0 130px;height:5px;border-radius:624px;background:var(--l);display:inline-block}
+[data-mode="dark"] .sld{background:var(--d)}
+.sldfill{position:absolute;inset:0 40% 0 0;border-radius:624px;background:var(--l)}
+[data-mode="dark"] .sldfill{background:var(--d)}
+.sldknob{position:absolute;top:50%;left:60%;transform:translate(-50%,-50%);width:14px;height:14px;
+  border-radius:624px;background:var(--l);box-shadow:0 0 0 2px var(--pv-bg)}
+[data-mode="dark"] .sldknob{background:var(--d)}
+.segctl{display:inline-flex;gap:2px;padding:3px;border-radius:8px;background:var(--l)}
+[data-mode="dark"] .segctl{background:var(--d)}
+.segitem{font-size:12.5px;font-weight:500;padding:5px 13px;border-radius:6px;color:var(--fgl)}
+[data-mode="dark"] .segitem{color:var(--fgd)}
+.segitem.sel{background:var(--l)}
+[data-mode="dark"] .segitem.sel{background:var(--d)}
+.selwrap{display:flex;flex-direction:column;gap:9px;max-width:290px}
+.selctl{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.menu{display:flex;flex-direction:column;padding:4px;border-radius:6px;background:var(--l);
+  border:1px solid var(--ol);color:var(--fgl);box-shadow:0 4px 6px rgb(0 0 0 / .1),0 2px 4px rgb(0 0 0 / .06)}
+[data-mode="dark"] .menu{background:var(--d);border-color:var(--od);color:var(--fgd)}
+.mitem{font-size:13px;padding:6px 10px;border-radius:4px}
+.mitem:first-child{background:var(--hl)}
+[data-mode="dark"] .mitem:first-child{background:var(--hd)}
+.ovgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px;align-items:start}
+.modalscrim{border-radius:9px;padding:22px 16px;display:flex;justify-content:center;background:var(--l)}
+[data-mode="dark"] .modalscrim{background:var(--d)}
+.modalbox{display:flex;flex-direction:column;gap:5px;padding:16px;border-radius:12px;background:var(--l);
+  border:1px solid var(--ol);color:var(--fgl);text-align:center;min-width:0;font-size:13.5px}
+[data-mode="dark"] .modalbox{background:var(--d);border-color:var(--od);color:var(--fgd)}
+.msub{font-size:12.5px;color:var(--fgl);opacity:.75}
+[data-mode="dark"] .msub{color:var(--fgd)}
+.mrow{display:flex;gap:8px;justify-content:center;margin-top:9px}
+.tipwrap{display:flex;align-items:center;justify-content:center;padding:22px 0}
+.tipbox{font-size:12.5px;padding:6px 11px;border-radius:8px;background:var(--l);color:var(--fgl)}
+[data-mode="dark"] .tipbox{background:var(--d);color:var(--fgd)}
+.toastgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:9px}
+.toast{display:flex;flex-direction:column;gap:1px;padding:9px 13px;border-radius:8px;background:var(--l);
+  color:var(--fgl);font-size:12.5px}
+[data-mode="dark"] .toast{background:var(--d);color:var(--fgd)}
+.toast b{font-weight:600;text-transform:capitalize}
+.toast span{font-family:"JetBrains Mono";font-size:10.5px;opacity:.8}
+table.demo{border-collapse:collapse;font-size:13px;color:var(--fgl);min-width:340px}
+[data-mode="dark"] table.demo{color:var(--fgd)}
+table.demo th{font-family:"JetBrains Mono";font-size:10px;font-weight:400;letter-spacing:.07em;
+  text-transform:uppercase;text-align:left;padding:8px 16px;color:var(--fgl)}
+[data-mode="dark"] table.demo th{color:var(--fgd)}
+table.demo thead{background:var(--l)}
+[data-mode="dark"] table.demo thead{background:var(--d)}
+table.demo td{padding:8px 16px;border-top:1px solid var(--ol)}
+[data-mode="dark"] table.demo td{border-top-color:var(--od)}
+table.demo tbody tr{background:var(--l)}
+[data-mode="dark"] table.demo tbody tr{background:var(--d)}
+.ldwrap{display:inline-flex;align-items:center;gap:9px}
+.loader{display:inline-block;border-radius:624px;border:2.5px solid var(--tl);border-top-color:var(--l);
+  animation:ldspin 1s linear infinite}
+[data-mode="dark"] .loader{border-color:var(--td);border-top-color:var(--d)}
+@keyframes ldspin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.loader{animation:none}}
+footer{margin-top:76px;padding-top:20px;border-top:1px solid var(--p-rule);font-size:12.5px;color:var(--p-ink3);max-width:74ch}
+footer code{font-size:11.5px}
+</style>
+
+<div class="shell">
+<nav class="rail" aria-label="Sections">
+  <span class="rt">Contents</span>
+  <a href="#arch">Architecture</a><a href="#color">Color</a><a href="#interactive">Interactive matrix</a><a href="#type">Typography</a><a href="#space">Spacing</a><a href="#radius">Radius</a><a href="#depth">Depth &amp; motion</a><a href="#layout">Layout</a><a href="#components">Components</a><a href="#mobile">Mobile</a>
+</nav>
+<main>
+<header>
+  <span class="eyebrow">povio/tiny-template · @povio/ui 3.4.0-rc.12</span>
+  <h1>Tiny Template Design System</h1>
+  <p class="sub">Every visual value in the template resolves through a three-layer token chain. Nothing is
+  hardcoded, and Tailwind's own palette is deleted before the system defines its own. This is the whole
+  vocabulary, read straight out of <code>theme.css</code>.</p>
+  <div class="meta">
+    <span class="pill">Tailwind v4</span><span class="pill">React 19.2</span>
+    <span class="pill">React Aria Components</span><span class="pill">theme.css · 2,177 lines</span>
+  </div>
+  <div class="statrow"><div class="stat"><span class="sv">479</span><span class="sl">base tokens</span></div><div class="stat"><span class="sv">× 2</span><span class="sl">light + dark</span></div><div class="stat"><span class="sv">5 × 5</span><span class="sl">styles × intents</span></div><div class="stat"><span class="sv">39</span><span class="sl">components in use</span></div></div>
+</header>
+
+<div class="modebar">
+  <span class="ml">Token values</span>
+  <div class="seg" role="group" aria-label="Show light or dark token values">
+    <button type="button" data-m="light" aria-pressed="true">Light</button>
+    <button type="button" data-m="dark" aria-pressed="false">Dark</button>
+  </div>
+  <span class="tnums" id="modehint">showing <code>:root</code></span>
+</div>
+
+<section id="arch">
+  <div class="shead"><h2>Architecture</h2><span class="cnt">3 layers</span></div>
+  
+<div class="chain">
+  <div class="clayer">
+    <span class="cnum">Base</span>
+    <code class="cdef">--interactive-contained-primary-idle-base: <b>0 90 154</b>;</code>
+    <p>Space-separated RGB channels, no <code>rgb()</code> wrapper. Redefined in <code>:root</code> and <code>.dark</code> — this is the only layer that changes between modes.</p>
+  </div>
+  <div class="carrow" aria-hidden="true"></div>
+  <div class="clayer">
+    <span class="cnum">Semantic</span>
+    <code class="cdef">--color-interactive-contained-primary-idle: <b>rgb(var(--…-base))</b>;</code>
+    <p>Declared once in <code>@theme</code>. Mode-agnostic — it never names a color, only a role.</p>
+  </div>
+  <div class="carrow" aria-hidden="true"></div>
+  <div class="clayer">
+    <span class="cnum">Utility</span>
+    <code class="cdef">class="<b>bg-interactive-contained-primary-idle</b>"</code>
+    <p>Tailwind v4 generates the utility from the <code>@theme</code> entry. This is all product code ever touches.</p>
+  </div>
+</div>
+<p class="lede">The triplet in layer 1 is the load-bearing decision. Because the channels are stored unwrapped,
+any consumer can add an alpha channel at the point of use — <code>bg-elevation-fill-default-1/50</code> —
+without a second token existing for the translucent variant. That is why there are 479 base tokens rather than
+several thousand.</p>
+<div class="callout">
+  <h5>theme.css is generated, not written</h5>
+  <p>The project's own rules say it plainly: <em>"Do not manually edit
+  <code>apps/fe/src/styles/theme.css</code>; it is exported from Figma."</em> All 479 base tokens and the
+  whole <code>@theme</code> block are downstream of the Figma variable set, so the design file is the source
+  of truth and a rename there is what propagates here. Hand-written additions belong in <code>base.css</code>,
+  which loads first and no export overwrites.</p>
+</div>
+<div class="callout">
+  <h5>Every primitive is deleted first</h5>
+  <p><code>base.css</code> opens with <code>--color-*: initial</code>, <code>--spacing-*: initial</code>,
+  <code>--radius-*: initial</code>, <code>--text-*: initial</code>, <code>--shadow-*: initial</code> and
+  <code>--breakpoint-*: initial</code>. Tailwind's entire default palette and scale are wiped out before the system
+  defines its own. There is no <code>bg-blue-500</code> to fall back to — an unbound value fails loudly instead of
+  silently working.</p>
+</div>
+</section>
+
+<section id="color">
+  <div class="shead"><h2>Color</h2><span class="cnt">479 tokens · light + dark</span></div>
+  <p class="lede">Tokens are named for the job they do, never the hue they hold. There is no
+  <code>blue-600</code> anywhere in the system — the closest thing is
+  <code>interactive-contained-primary-idle</code>, and its value is free to change without a rename. Light and
+  dark are perfectly paired: all 479 names exist in both <code>:root</code> and <code>.dark</code>, with no
+  orphans in either direction.</p>
+  <div class="grid2">
+    <div class="grp"><h4>Elevation — fills</h4><p class="note">Page and card grounds. The 2-5 and 3-5 half-steps exist because dark mode needs finer separation than light.</p><div class="swlist"><div class="srow"><span class="sw" style="--l:#ffffff;--d:#191a1b"></span><code class="tk">elevation-fill-default-1</code><span class="hex"><span class="vl">#ffffff</span><span class="vd">#191a1b</span></span></div><div class="srow"><span class="sw" style="--l:#eef0f2;--d:#131414"></span><code class="tk">elevation-fill-default-2-5</code><span class="hex"><span class="vl">#eef0f2</span><span class="vd">#131414</span></span></div><div class="srow"><span class="sw" style="--l:#f8f9f9;--d:#131414"></span><code class="tk">elevation-fill-default-2</code><span class="hex"><span class="vl">#f8f9f9</span><span class="vd">#131414</span></span></div><div class="srow"><span class="sw" style="--l:#dadcdd;--d:#0c0d0d"></span><code class="tk">elevation-fill-default-3-5</code><span class="hex"><span class="vl">#dadcdd</span><span class="vd">#0c0d0d</span></span></div><div class="srow"><span class="sw" style="--l:#eaeef0;--d:#0c0d0d"></span><code class="tk">elevation-fill-default-3</code><span class="hex"><span class="vl">#eaeef0</span><span class="vd">#0c0d0d</span></span></div><div class="srow"><span class="sw" style="--l:#f0f8fe;--d:#002e4f"></span><code class="tk">elevation-fill-default-4</code><span class="hex"><span class="vl">#f0f8fe</span><span class="vd">#002e4f</span></span></div><div class="srow"><span class="sw" style="--l:#9f362c;--d:#f4d9d6"></span><code class="tk">elevation-fill-error-1</code><span class="hex"><span class="vl">#9f362c</span><span class="vd">#f4d9d6</span></span></div><div class="srow"><span class="sw" style="--l:#191a1b;--d:#f8f9f9"></span><code class="tk">elevation-fill-inverted-1</code><span class="hex"><span class="vl">#191a1b</span><span class="vd">#f8f9f9</span></span></div><div class="srow"><span class="sw" style="--l:#232526;--d:#dadcdd"></span><code class="tk">elevation-fill-inverted-2</code><span class="hex"><span class="vl">#232526</span><span class="vd">#dadcdd</span></span></div><div class="srow"><span class="sw" style="--l:#4f5558;--d:#c6c8c9"></span><code class="tk">elevation-fill-inverted-3</code><span class="hex"><span class="vl">#4f5558</span><span class="vd">#c6c8c9</span></span></div><div class="srow"><span class="sw" style="--l:#6f7274;--d:#b0b2b3"></span><code class="tk">elevation-fill-inverted-4</code><span class="hex"><span class="vl">#6f7274</span><span class="vd">#b0b2b3</span></span></div><div class="srow"><span class="sw" style="--l:#2f9276;--d:#daf3ea"></span><code class="tk">elevation-fill-success-1</code><span class="hex"><span class="vl">#2f9276</span><span class="vd">#daf3ea</span></span></div><div class="srow"><span class="sw" style="--l:#d07d24;--d:#fde7c8"></span><code class="tk">elevation-fill-warning-1</code><span class="hex"><span class="vl">#d07d24</span><span class="vd">#fde7c8</span></span></div></div></div>
+    <div class="grp"><h4>Elevation — outlines</h4><p class="note">Borders and dividers, three depths plus semantic and inverted sets.</p><div class="swlist"><div class="srow"><span class="sw" style="--l:#dadcdd;--d:#232526"></span><code class="tk">elevation-outline-default-1</code><span class="hex"><span class="vl">#dadcdd</span><span class="vd">#232526</span></span></div><div class="srow"><span class="sw" style="--l:#c6c8c9;--d:#4f5558"></span><code class="tk">elevation-outline-default-2</code><span class="hex"><span class="vl">#c6c8c9</span><span class="vd">#4f5558</span></span></div><div class="srow"><span class="sw" style="--l:#b0b2b3;--d:#6f7274"></span><code class="tk">elevation-outline-default-3</code><span class="hex"><span class="vl">#b0b2b3</span><span class="vd">#6f7274</span></span></div><div class="srow"><span class="sw" style="--l:#b8453a;--d:#9f362c"></span><code class="tk">elevation-outline-error-1</code><span class="hex"><span class="vl">#b8453a</span><span class="vd">#9f362c</span></span></div><div class="srow"><span class="sw" style="--l:#232526;--d:#dadcdd"></span><code class="tk">elevation-outline-inverted-1</code><span class="hex"><span class="vl">#232526</span><span class="vd">#dadcdd</span></span></div><div class="srow"><span class="sw" style="--l:#4f5558;--d:#c6c8c9"></span><code class="tk">elevation-outline-inverted-2</code><span class="hex"><span class="vl">#4f5558</span><span class="vd">#c6c8c9</span></span></div><div class="srow"><span class="sw" style="--l:#6f7274;--d:#b0b2b3"></span><code class="tk">elevation-outline-inverted-3</code><span class="hex"><span class="vl">#6f7274</span><span class="vd">#b0b2b3</span></span></div><div class="srow"><span class="sw" style="--l:#73c4aa;--d:#4caf90"></span><code class="tk">elevation-outline-success-1</code><span class="hex"><span class="vl">#73c4aa</span><span class="vd">#4caf90</span></span></div><div class="srow"><span class="sw" style="--l:#eeb15f;--d:#e2953a"></span><code class="tk">elevation-outline-warning-1</code><span class="hex"><span class="vl">#eeb15f</span><span class="vd">#e2953a</span></span></div></div></div>
+  </div>
+  <div class="grid2" style="margin-top:26px">
+    <div class="grp"><h4>Text</h4><p class="note">Three neutral weights, three per semantic intent, plus inverted ramps for text sitting on filled surfaces.</p><div class="swlist"><div class="srow"><span class="sw" style="--l:#191a1b;--d:#eaeef0"></span><code class="tk">text-default-1</code><span class="hex"><span class="vl">#191a1b</span><span class="vd">#eaeef0</span></span></div><div class="srow"><span class="sw" style="--l:#4f5558;--d:#dadcdd"></span><code class="tk">text-default-2</code><span class="hex"><span class="vl">#4f5558</span><span class="vd">#dadcdd</span></span></div><div class="srow"><span class="sw" style="--l:#6f7274;--d:#b0b2b3"></span><code class="tk">text-default-3</code><span class="hex"><span class="vl">#6f7274</span><span class="vd">#b0b2b3</span></span></div><div class="srow"><span class="sw" style="--l:#9f362c;--d:#b8453a"></span><code class="tk">text-error-1</code><span class="hex"><span class="vl">#9f362c</span><span class="vd">#b8453a</span></span></div><div class="srow"><span class="sw" style="--l:#b8453a;--d:#9f362c"></span><code class="tk">text-error-2</code><span class="hex"><span class="vl">#b8453a</span><span class="vd">#9f362c</span></span></div><div class="srow"><span class="sw" style="--l:#c9655b;--d:#842d25"></span><code class="tk">text-error-3</code><span class="hex"><span class="vl">#c9655b</span><span class="vd">#842d25</span></span></div><div class="srow"><span class="sw" style="--l:#fef3f2;--d:#6b2620"></span><code class="tk">text-error-inverted-1</code><span class="hex"><span class="vl">#fef3f2</span><span class="vd">#6b2620</span></span></div><div class="srow"><span class="sw" style="--l:#f4d9d6;--d:#842d25"></span><code class="tk">text-error-inverted-2</code><span class="hex"><span class="vl">#f4d9d6</span><span class="vd">#842d25</span></span></div><div class="srow"><span class="sw" style="--l:#e8b6b0;--d:#9f362c"></span><code class="tk">text-error-inverted-3</code><span class="hex"><span class="vl">#e8b6b0</span><span class="vd">#9f362c</span></span></div><div class="srow"><span class="sw" style="--l:#eaeef0;--d:#191a1b"></span><code class="tk">text-inverted-1</code><span class="hex"><span class="vl">#eaeef0</span><span class="vd">#191a1b</span></span></div><div class="srow"><span class="sw" style="--l:#dadcdd;--d:#4f5558"></span><code class="tk">text-inverted-2</code><span class="hex"><span class="vl">#dadcdd</span><span class="vd">#4f5558</span></span></div><div class="srow"><span class="sw" style="--l:#c6c8c9;--d:#8c8e90"></span><code class="tk">text-inverted-3</code><span class="hex"><span class="vl">#c6c8c9</span><span class="vd">#8c8e90</span></span></div><div class="srow"><span class="sw" style="--l:#237662;--d:#4caf90"></span><code class="tk">text-success-1</code><span class="hex"><span class="vl">#237662</span><span class="vd">#4caf90</span></span></div><div class="srow"><span class="sw" style="--l:#2f9276;--d:#2f9276"></span><code class="tk">text-success-2</code><span class="hex"><span class="vl">#2f9276</span><span class="vd">#2f9276</span></span></div><div class="srow"><span class="sw" style="--l:#73c4aa;--d:#237662"></span><code class="tk">text-success-3</code><span class="hex"><span class="vl">#73c4aa</span><span class="vd">#237662</span></span></div><div class="srow"><span class="sw" style="--l:#f0fdf5;--d:#1d5f4f"></span><code class="tk">text-success-inverted-1</code><span class="hex"><span class="vl">#f0fdf5</span><span class="vd">#1d5f4f</span></span></div><div class="srow"><span class="sw" style="--l:#daf3ea;--d:#237662"></span><code class="tk">text-success-inverted-2</code><span class="hex"><span class="vl">#daf3ea</span><span class="vd">#237662</span></span></div><div class="srow"><span class="sw" style="--l:#bfe8da;--d:#2f9276"></span><code class="tk">text-success-inverted-3</code><span class="hex"><span class="vl">#bfe8da</span><span class="vd">#2f9276</span></span></div><div class="srow"><span class="sw" style="--l:#965618;--d:#e2953a"></span><code class="tk">text-warning-1</code><span class="hex"><span class="vl">#965618</span><span class="vd">#e2953a</span></span></div><div class="srow"><span class="sw" style="--l:#e2953a;--d:#d07d24"></span><code class="tk">text-warning-2</code><span class="hex"><span class="vl">#e2953a</span><span class="vd">#d07d24</span></span></div><div class="srow"><span class="sw" style="--l:#eeb15f;--d:#b8681c"></span><code class="tk">text-warning-3</code><span class="hex"><span class="vl">#eeb15f</span><span class="vd">#b8681c</span></span></div><div class="srow"><span class="sw" style="--l:#fff6eb;--d:#784715"></span><code class="tk">text-warning-inverted-1</code><span class="hex"><span class="vl">#fff6eb</span><span class="vd">#784715</span></span></div><div class="srow"><span class="sw" style="--l:#fde7c8;--d:#965618"></span><code class="tk">text-warning-inverted-2</code><span class="hex"><span class="vl">#fde7c8</span><span class="vd">#965618</span></span></div><div class="srow"><span class="sw" style="--l:#f6cf95;--d:#b8681c"></span><code class="tk">text-warning-inverted-3</code><span class="hex"><span class="vl">#f6cf95</span><span class="vd">#b8681c</span></span></div></div></div>
+    <div class="grp"><h4>Input</h4><p class="note">Outlined and filled variants each carry their own fill and outline per state.</p><div class="swlist"><div class="srow"><span class="sw" style="--l:#ffffff;--d:#191a1b"></span><code class="tk">input-filled-active</code><span class="hex"><span class="vl">#ffffff</span><span class="vd">#191a1b</span></span></div><div class="srow"><span class="sw" style="--l:#eaeef0;--d:#0c0d0d"></span><code class="tk">input-filled-disabled</code><span class="hex"><span class="vl">#eaeef0</span><span class="vd">#0c0d0d</span></span></div><div class="srow"><span class="sw" style="--l:#eaeef0;--d:#0c0d0d"></span><code class="tk">input-filled-error</code><span class="hex"><span class="vl">#eaeef0</span><span class="vd">#0c0d0d</span></span></div><div class="srow"><span class="sw" style="--l:#eaeef0;--d:#0c0d0d"></span><code class="tk">input-filled-hover</code><span class="hex"><span class="vl">#eaeef0</span><span class="vd">#0c0d0d</span></span></div><div class="srow"><span class="sw" style="--l:#eaeef0;--d:#0c0d0d"></span><code class="tk">input-filled-idle</code><span class="hex"><span class="vl">#eaeef0</span><span class="vd">#0c0d0d</span></span></div><div class="srow"><span class="sw" style="--l:#005a9a;--d:#2e8ed2"></span><code class="tk">input-filled-outline-active</code><span class="hex"><span class="vl">#005a9a</span><span class="vd">#2e8ed2</span></span></div><div class="srow"><span class="sw" style="--l:#b8453a;--d:#b8453a"></span><code class="tk">input-filled-outline-error</code><span class="hex"><span class="vl">#b8453a</span><span class="vd">#b8453a</span></span></div><div class="srow"><span class="sw" style="--l:#4f5558;--d:#b0b2b3"></span><code class="tk">input-filled-outline-hover</code><span class="hex"><span class="vl">#4f5558</span><span class="vd">#b0b2b3</span></span></div><div class="srow"><span class="sw" style="--l:#ffffff;--d:#191a1b"></span><code class="tk">input-outlined-active</code><span class="hex"><span class="vl">#ffffff</span><span class="vd">#191a1b</span></span></div><div class="srow"><span class="sw" style="--l:#ffffff;--d:#191a1b"></span><code class="tk">input-outlined-disabled</code><span class="hex"><span class="vl">#ffffff</span><span class="vd">#191a1b</span></span></div><div class="srow"><span class="sw" style="--l:#ffffff;--d:#191a1b"></span><code class="tk">input-outlined-error</code><span class="hex"><span class="vl">#ffffff</span><span class="vd">#191a1b</span></span></div><div class="srow"><span class="sw" style="--l:#ffffff;--d:#191a1b"></span><code class="tk">input-outlined-hover</code><span class="hex"><span class="vl">#ffffff</span><span class="vd">#191a1b</span></span></div><div class="srow"><span class="sw" style="--l:#ffffff;--d:#191a1b"></span><code class="tk">input-outlined-idle</code><span class="hex"><span class="vl">#ffffff</span><span class="vd">#191a1b</span></span></div><div class="srow"><span class="sw" style="--l:#005a9a;--d:#2e8ed2"></span><code class="tk">input-outlined-outline-active</code><span class="hex"><span class="vl">#005a9a</span><span class="vd">#2e8ed2</span></span></div><div class="srow"><span class="sw" style="--l:#dadcdd;--d:#232526"></span><code class="tk">input-outlined-outline-disabled</code><span class="hex"><span class="vl">#dadcdd</span><span class="vd">#232526</span></span></div><div class="srow"><span class="sw" style="--l:#b8453a;--d:#b8453a"></span><code class="tk">input-outlined-outline-error</code><span class="hex"><span class="vl">#b8453a</span><span class="vd">#b8453a</span></span></div><div class="srow"><span class="sw" style="--l:#2e8ed2;--d:#006ab6"></span><code class="tk">input-outlined-outline-hover</code><span class="hex"><span class="vl">#2e8ed2</span><span class="vd">#006ab6</span></span></div><div class="srow"><span class="sw" style="--l:#c6c8c9;--d:#232526"></span><code class="tk">input-outlined-outline-idle</code><span class="hex"><span class="vl">#c6c8c9</span><span class="vd">#232526</span></span></div></div></div>
+  </div>
+  <div class="grid2" style="margin-top:26px">
+    <div class="grp"><h4>Support</h4><p class="note">Overlay scrim, alert dot, transparent outline, and three fixed status hues.</p><div class="swlist"><div class="srow"><span class="sw" style="--l:#ff2b2b;--d:#ffffff"></span><code class="tk">support-alert</code><span class="hex"><span class="vl">#ff2b2b</span><span class="vd">#ffffff</span></span></div><div class="srow"><span class="sw" style="--l:#000000;--d:#000000"></span><code class="tk">support-default</code><span class="hex"><span class="vl">#000000</span><span class="vd">#000000</span></span></div><div class="srow"><span class="sw" style="--l:#ffffff;--d:#ffffff"></span><code class="tk">support-inverted</code><span class="hex"><span class="vl">#ffffff</span><span class="vd">#ffffff</span></span></div><div class="srow"><span class="sw" style="--l:#00000066;--d:#00000066"></span><code class="tk">support-overlay</code><span class="hex"><span class="vl">#00000066</span><span class="vd">#00000066</span></span></div><div class="srow"><span class="sw" style="--l:#ede9fe;--d:#ffffff"></span><code class="tk">support-status-purple-bg</code><span class="hex"><span class="vl">#ede9fe</span><span class="vd">#ffffff</span></span></div><div class="srow"><span class="sw" style="--l:#5e4785;--d:#ffffff"></span><code class="tk">support-status-purple-on</code><span class="hex"><span class="vl">#5e4785</span><span class="vd">#ffffff</span></span></div><div class="srow"><span class="sw" style="--l:#d5fbfb;--d:#ffffff"></span><code class="tk">support-status-teal-bg</code><span class="hex"><span class="vl">#d5fbfb</span><span class="vd">#ffffff</span></span></div><div class="srow"><span class="sw" style="--l:#477b85;--d:#ffffff"></span><code class="tk">support-status-teal-on</code><span class="hex"><span class="vl">#477b85</span><span class="vd">#ffffff</span></span></div><div class="srow"><span class="sw" style="--l:#ffffff;--d:#ffffff"></span><code class="tk">support-status-white-bg</code><span class="hex"><span class="vl">#ffffff</span><span class="vd">#ffffff</span></span></div><div class="srow"><span class="sw" style="--l:#fcf8cf;--d:#ffffff"></span><code class="tk">support-status-yellow-bg</code><span class="hex"><span class="vl">#fcf8cf</span><span class="vd">#ffffff</span></span></div><div class="srow"><span class="sw" style="--l:#736b08;--d:#ffffff"></span><code class="tk">support-status-yellow-on</code><span class="hex"><span class="vl">#736b08</span><span class="vd">#ffffff</span></span></div><div class="srow"><span class="sw" style="--l:#ffffff00;--d:#ffffff00"></span><code class="tk">support-transparent-outline</code><span class="hex"><span class="vl">#ffffff00</span><span class="vd">#ffffff00</span></span></div></div></div>
+    <div class="grp"><h4>Shadow &amp;amp; focus</h4><p class="note">Shadow tokens are alpha-only blacks; they darken in dark mode rather than lighten.</p><div class="swlist"><div class="srow"><span class="sw" style="--l:#0000001a;--d:#00000026"></span><code class="tk">shadow-10</code><span class="hex"><span class="vl">#0000001a</span><span class="vd">#00000026</span></span></div><div class="srow"><span class="sw" style="--l:#00000040;--d:#00000061"></span><code class="tk">shadow-25</code><span class="hex"><span class="vl">#00000040</span><span class="vd">#00000061</span></span></div><div class="srow"><span class="sw" style="--l:#0000000a;--d:#0000000f"></span><code class="tk">shadow-4</code><span class="hex"><span class="vl">#0000000a</span><span class="vd">#0000000f</span></span></div><div class="srow"><span class="sw" style="--l:#0000000d;--d:#00000014"></span><code class="tk">shadow-5</code><span class="hex"><span class="vl">#0000000d</span><span class="vd">#00000014</span></span></div><div class="srow"><span class="sw" style="--l:#0000000f;--d:#00000017"></span><code class="tk">shadow-6</code><span class="hex"><span class="vl">#0000000f</span><span class="vd">#00000017</span></span></div><div class="srow"><span class="sw" style="--l:#191a1b;--d:#b0b2b3"></span><code class="tk">focus</code><span class="hex"><span class="vl">#191a1b</span><span class="vd">#b0b2b3</span></span></div></div></div>
+  </div>
+  <h3>Status hues</h3>
+  <p class="lede">The only place the system names a color rather than a role. Three fixed pairs for
+  categorical tagging — note they collapse to plain white in dark mode, so they are light-mode-only.</p>
+  <div class="preview"><div class="row"><span class="tag" style="--l:#ede9fe;--d:#ffffff;--fgl:#5e4785;--fgd:#ffffff">purple</span><span class="tag" style="--l:#d5fbfb;--d:#ffffff;--fgl:#477b85;--fgd:#ffffff">teal</span><span class="tag" style="--l:#fcf8cf;--d:#ffffff;--fgl:#736b08;--fgd:#ffffff">yellow</span></div></div>
+  <h3>Semantic feedback</h3>
+  <div class="preview"><div class="alert" style="--l:#2f9276;--d:#daf3ea;--ol:#73c4aa;--od:#4caf90;--fgl:#f0fdf5;--fgd:#1d5f4f"><strong>Success</strong> — elevation-fill-success-1 on text-success-inverted-1</div><div class="alert" style="--l:#d07d24;--d:#fde7c8;--ol:#eeb15f;--od:#e2953a;--fgl:#fff6eb;--fgd:#784715"><strong>Warning</strong> — elevation-fill-warning-1 on text-warning-inverted-1</div><div class="alert" style="--l:#9f362c;--d:#f4d9d6;--ol:#b8453a;--od:#9f362c;--fgl:#fef3f2;--fgd:#6b2620"><strong>Error</strong> — elevation-fill-error-1 on text-error-inverted-1</div></div>
+</section>
+
+<section id="interactive">
+  <div class="shead"><h2>Interactive matrix</h2><span class="cnt">397 tokens · 5 × 5 × 15</span></div>
+  <p class="lede">Five visual styles crossed with five intents, each carrying up to fifteen states. This single
+  family is 83% of the color system, and it is the reason the token count is what it is. Every button below is
+  a real render of its tokens — background, foreground and outline all read from the values in
+  <code>theme.css</code>.</p>
+  <div class="preview"><div class="tblwrap"><table class="matrix"><thead><tr><th></th><th>contained</th><th>outlined</th><th>subtle</th><th>ghost</th><th>text</th></tr></thead><tbody><tr><th class="rh">primary</th><td><span class="btn" style="--l:#005a9a;--d:#005a9a;--fgl:#ffffff;--fgd:#ffffff">Button</span></td><td><span class="btn btn-outlined" style="--l:#ffffff00;--d:#ffffff00;--fgl:#005a9a;--fgd:#5faae0;--ol:#005a9a;--od:#005a9a">Button</span></td><td><span class="btn" style="--l:#d9e9f4;--d:#002e4f;--fgl:#004b7f;--fgd:#f0f8fe">Button</span></td><td><span class="btn" style="--l:#f0f5fe00;--d:#253a8300;--fgl:#004b7f;--fgd:#f0f8fe">Button</span></td><td><span class="btn btn-text" style="--l:#005a9a;--d:#5faae0">Button</span></td></tr><tr><th class="rh">secondary</th><td><span class="btn" style="--l:#4f5558;--d:#232526;--fgl:#ffffff;--fgd:#ffffff">Button</span></td><td><span class="btn btn-outlined" style="--l:#ffffff00;--d:#ffffff00;--fgl:#4f5558;--fgd:#c6c8c9;--ol:#4f5558;--od:#4f5558">Button</span></td><td><span class="btn" style="--l:#eaeef0;--d:#131414;--fgl:#4f5558;--fgd:#eaeef0">Button</span></td><td><span class="btn" style="--l:#ebedef00;--d:#181c2300;--fgl:#4f5558;--fgd:#eaeef0">Button</span></td><td><span class="btn btn-text" style="--l:#4f5558;--d:#c6c8c9">Button</span></td></tr><tr><th class="rh">success</th><td><span class="btn" style="--l:#2f9276;--d:#237662;--fgl:#ffffff;--fgd:#ffffff">Button</span></td><td><span class="btn btn-outlined" style="--l:#ffffff00;--d:#ffffff00;--fgl:#2f9276;--fgd:#4caf90;--ol:#2f9276;--od:#237662">Button</span></td><td><span class="btn" style="--l:#daf3ea;--d:#174a3f;--fgl:#1d5f4f;--fgd:#daf3ea">Button</span></td><td><span class="btn" style="--l:#dcfce800;--d:#14532b00;--fgl:#1d5f4f;--fgd:#daf3ea">Button</span></td><td><span class="btn btn-text" style="--l:#2f9276;--d:#4caf90">Button</span></td></tr><tr><th class="rh">warning</th><td><span class="btn" style="--l:#d07d24;--d:#b8681c;--fgl:#ffffff;--fgd:#ffffff">Button</span></td><td><span class="btn btn-outlined" style="--l:#ffffff00;--d:#ffffff00;--fgl:#d07d24;--fgd:#d07d24;--ol:#d07d24;--od:#b8681c">Button</span></td><td><span class="btn" style="--l:#fde7c8;--d:#362009;--fgl:#784715;--fgd:#fde7c8">Button</span></td><td><span class="btn" style="--l:#fee4c700;--d:#45260300;--fgl:#784715;--fgd:#fde7c8">Button</span></td><td><span class="btn btn-text" style="--l:#d07d24;--d:#d07d24">Button</span></td></tr><tr><th class="rh">error</th><td><span class="btn" style="--l:#9f362c;--d:#842d25;--fgl:#ffffff;--fgd:#ffffff">Button</span></td><td><span class="btn btn-outlined" style="--l:#ffffff00;--d:#ffffff00;--fgl:#9f362c;--fgd:#b8453a;--ol:#9f362c;--od:#842d25">Button</span></td><td><span class="btn" style="--l:#f4d9d6;--d:#33100e;--fgl:#6b2620;--fgd:#f4d9d6">Button</span></td><td><span class="btn" style="--l:#fde6e300;--d:#43130c00;--fgl:#6b2620;--fgd:#f4d9d6">Button</span></td><td><span class="btn btn-text" style="--l:#9f362c;--d:#9f362c">Button</span></td></tr></tbody></table></div></div>
+  <p class="pvcap">style × intent, idle state</p>
+  <h3>State axis</h3>
+  <p class="lede">The <code>outlined</code> and <code>ghost</code> styles hold a fully transparent idle fill
+  (<code>#ffffff00</code>) and only materialise on hover — which is why their idle cells above look empty. That
+  is the system working, not a gap.</p>
+  <div class="preview"><div class="tblwrap"><table class="matrix"><thead><tr><th></th><th>idle</th><th>hover</th><th>pressed</th><th>disabled</th></tr></thead><tbody><tr><th class="rh">contained</th><td><span class="btn" style="--l:#005a9a;--d:#005a9a;--fgl:#ffffff;--fgd:#ffffff">Button</span></td><td><span class="btn" style="--l:#2e8ed2;--d:#004b7f;--fgl:#ffffff;--fgd:#ffffff">Button</span></td><td><span class="btn" style="--l:#5faae0;--d:#003c66;--fgl:#ffffff;--fgd:#ffffff">Button</span></td><td><span class="btn" style="--l:#9bc2dd;--d:#003c66;--fgl:#ffffff;--fgd:#006ab6">Button</span></td></tr><tr><th class="rh">outlined</th><td><span class="btn btn-outlined" style="--l:#ffffff00;--d:#ffffff00;--fgl:#005a9a;--fgd:#5faae0;--ol:#005a9a;--od:#005a9a">Button</span></td><td><span class="btn btn-outlined" style="--l:#f0f8fe;--d:#002e4f;--fgl:#2e8ed2;--fgd:#2e8ed2;--ol:#2e8ed2;--od:#004b7f">Button</span></td><td><span class="btn btn-outlined" style="--l:#f0f8fe;--d:#002e4f;--fgl:#5faae0;--fgd:#006ab6;--ol:#5faae0;--od:#003c66">Button</span></td><td><span class="btn btn-outlined" style="--l:#ffffff00;--d:#ffffff00;--fgl:#c2d6e5;--fgd:#003c66;--ol:#c2d6e5;--od:#003c66">Button</span></td></tr><tr><th class="rh">subtle</th><td><span class="btn" style="--l:#d9e9f4;--d:#002e4f;--fgl:#004b7f;--fgd:#f0f8fe">Button</span></td><td><span class="btn" style="--l:#d9e9f4;--d:#003c66;--fgl:#004b7f;--fgd:#f0f8fe">Button</span></td><td><span class="btn" style="--l:#c2d6e5;--d:#004b7f;--fgl:#004b7f;--fgd:#f0f8fe">Button</span></td><td><span class="btn" style="--l:#f0f8fe;--d:#002e4f;--fgl:#9bc2dd;--fgd:#005a9a">Button</span></td></tr><tr><th class="rh">ghost</th><td><span class="btn" style="--l:#f0f5fe00;--d:#253a8300;--fgl:#004b7f;--fgd:#f0f8fe">Button</span></td><td><span class="btn" style="--l:#d9e9f4;--d:#004b7f;--fgl:#004b7f;--fgd:#f0f8fe">Button</span></td><td><span class="btn" style="--l:#c2d6e5;--d:#005a9a;--fgl:#004b7f;--fgd:#f0f8fe">Button</span></td><td><span class="btn" style="--l:#f0f8fe;--d:#002e4f;--fgl:#9bc2dd;--fgd:#005a9a">Button</span></td></tr><tr><th class="rh">text</th><td><span class="btn btn-text" style="--l:#005a9a;--d:#5faae0">Button</span></td><td><span class="btn btn-text" style="--l:#2e8ed2;--d:#2e8ed2">Button</span></td><td><span class="btn btn-text" style="--l:#5faae0;--d:#006ab6">Button</span></td><td><span class="btn btn-text" style="--l:#9bc2dd;--d:#003c66">Button</span></td></tr></tbody></table></div></div>
+  <p class="pvcap">primary intent across states</p>
+  <h3>Toggled axis</h3>
+  <p class="lede">A parallel set of states for controls that latch — segmented controls, toggle buttons, filter
+  pills. Selection is a first-class state in the token layer rather than something styled ad hoc at the call site.</p>
+  <div class="preview"><div class="tblwrap"><table class="matrix"><thead><tr><th></th><th>toggled-idle</th><th>toggled-hover</th><th>toggled-disabled</th></tr></thead><tbody><tr><th class="rh">contained</th><td><span class="btn" style="--l:#004b7f;--d:#004b7f;--fgl:#ffffff;--fgd:#ffffff">Button</span></td><td><span class="btn" style="--l:#005a9a;--d:#2e8ed2;--fgl:#f8f9f9;--fgd:#f8f9f9">Button</span></td><td><span class="btn" style="--l:#004b7f;--d:#004b7f;--fgl:#2e8ed2;--fgd:#002e4f">Button</span></td></tr><tr><th class="rh">outlined</th><td><span class="btn btn-outlined" style="--l:#005a9a;--d:#005a9a;--fgl:#ffffff;--fgd:#ffffff;--ol:#005a9a;--od:#005a9a">Button</span></td><td><span class="btn btn-outlined" style="--l:#2e8ed2;--d:#004b7f;--fgl:#ffffff;--fgd:#ffffff;--ol:#005a9a;--od:#005a9a">Button</span></td><td><span class="btn btn-outlined" style="--l:#5faae0;--d:#005a9a;--fgl:#c2d6e5;--fgd:#2e8ed2;--ol:#005a9a;--od:#005a9a">Button</span></td></tr><tr><th class="rh">subtle</th><td><span class="btn" style="--l:#005a9a;--d:#004b7f;--fgl:#ffffff;--fgd:#ffffff">Button</span></td><td><span class="btn" style="--l:#2e8ed2;--d:#006ab6;--fgl:#ffffff;--fgd:#ffffff">Button</span></td><td><span class="btn" style="--l:#5faae0;--d:#004b7f;--fgl:#c2d6e5;--fgd:#2e8ed2">Button</span></td></tr><tr><th class="rh">ghost</th><td><span class="btn" style="--l:#d9e9f4;--d:#002e4f;--fgl:#004b7f;--fgd:#ffffff">Button</span></td><td><span class="btn" style="--l:#9bc2dd;--d:#006ab6;--fgl:#004b7f;--fgd:#ffffff">Button</span></td><td><span class="btn" style="--l:#c2d6e5;--d:#004b7f;--fgl:#5faae0;--fgd:#2e8ed2">Button</span></td></tr><tr><th class="rh">text</th><td><span class="btn btn-text" style="--l:#003c66;--d:#005a9a">Button</span></td><td><span class="btn btn-text" style="--l:#000;--d:#000">Button</span></td><td><span class="btn btn-text" style="--l:#9bc2dd;--d:#003c66">Button</span></td></tr></tbody></table></div></div>
+  <p class="pvcap">primary intent, toggled states</p>
+  <h3>Intent across fills</h3>
+  <div class="preview"><div class="tblwrap"><table class="matrix"><thead><tr><th></th><th>primary</th><th>secondary</th><th>success</th><th>warning</th><th>error</th></tr></thead><tbody><tr><th class="rh">contained</th><td><span class="btn" style="--l:#005a9a;--d:#005a9a;--fgl:#ffffff;--fgd:#ffffff">primary</span></td><td><span class="btn" style="--l:#4f5558;--d:#232526;--fgl:#ffffff;--fgd:#ffffff">secondary</span></td><td><span class="btn" style="--l:#2f9276;--d:#237662;--fgl:#ffffff;--fgd:#ffffff">success</span></td><td><span class="btn" style="--l:#d07d24;--d:#b8681c;--fgl:#ffffff;--fgd:#ffffff">warning</span></td><td><span class="btn" style="--l:#9f362c;--d:#842d25;--fgl:#ffffff;--fgd:#ffffff">error</span></td></tr><tr><th class="rh">subtle</th><td><span class="btn" style="--l:#d9e9f4;--d:#002e4f;--fgl:#004b7f;--fgd:#f0f8fe">primary</span></td><td><span class="btn" style="--l:#eaeef0;--d:#131414;--fgl:#4f5558;--fgd:#eaeef0">secondary</span></td><td><span class="btn" style="--l:#daf3ea;--d:#174a3f;--fgl:#1d5f4f;--fgd:#daf3ea">success</span></td><td><span class="btn" style="--l:#fde7c8;--d:#362009;--fgl:#784715;--fgd:#fde7c8">warning</span></td><td><span class="btn" style="--l:#f4d9d6;--d:#33100e;--fgl:#6b2620;--fgd:#f4d9d6">error</span></td></tr></tbody></table></div></div>
+  <p class="pvcap">contained and subtle, all five intents</p>
+</section>
+
+<section id="type">
+  <div class="shead"><h2>Typography</h2><span class="cnt">2 ramps · 7 weights</span></div>
+  <p class="lede">The scale is declared twice, in full, under <code>desktop-</code> and
+<code>mobile-</code> prefixes — a genuine pair of ramps rather than one ramp with fluid clamping. Note that they do
+not simply shift by one step: <code>title-1</code> drops 3rem → 1.75rem, while <code>title-5</code> and
+<code>title-6</code> converge on the same 0.875rem on mobile. Label sizes are shared across both.</p>
+  <div class="callout"><h5>The real face is General Sans</h5><p><code>--font-primary</code> and
+<code>--font-secondary</code> both resolve to <b>General Sans</b>, loaded from four local <code>.otf</code> files
+(400/500/600/700). <code>globals.css</code> also imports Inter and Geist as variable fonts, but no token references
+them — they are available and unused. This page is set in Archivo and Public Sans, because General Sans is not
+served by Google Fonts and cannot be loaded here; the sizes, line-heights and letter-spacings below are the
+system's real values.</p></div>
+  <div class="grid2">
+    <div class="grp"><h4>Desktop — titles</h4><div class="tlist"><div class="tspec"><div class="tsample" style="font-size:3rem;line-height:1.25;letter-spacing:0em">Aa</div><div class="tmeta"><code class="tk">title-1</code><span class="tnums">3rem · 48px · lh 1.25 · ls 0em</span></div></div><div class="tspec"><div class="tsample" style="font-size:2rem;line-height:1.3125;letter-spacing:0em">Aa</div><div class="tmeta"><code class="tk">title-2</code><span class="tnums">2rem · 32px · lh 1.3125 · ls 0em</span></div></div><div class="tspec"><div class="tsample" style="font-size:1.75rem;line-height:1.3571;letter-spacing:0em">Aa</div><div class="tmeta"><code class="tk">title-3</code><span class="tnums">1.75rem · 28px · lh 1.3571 · ls 0em</span></div></div><div class="tspec"><div class="tsample" style="font-size:1.375rem;line-height:1.2727;letter-spacing:0em">Aa</div><div class="tmeta"><code class="tk">title-4</code><span class="tnums">1.375rem · 22px · lh 1.2727 · ls 0em</span></div></div><div class="tspec"><div class="tsample" style="font-size:1.125rem;line-height:1.4444;letter-spacing:0em">Aa</div><div class="tmeta"><code class="tk">title-5</code><span class="tnums">1.125rem · 18px · lh 1.4444 · ls 0em</span></div></div><div class="tspec"><div class="tsample" style="font-size:1rem;line-height:1.5;letter-spacing:0em">Aa</div><div class="tmeta"><code class="tk">title-6</code><span class="tnums">1rem · 16px · lh 1.5 · ls 0em</span></div></div></div></div>
+    <div class="grp"><h4>Mobile — titles</h4><div class="tlist"><div class="tspec"><div class="tsample" style="font-size:1.75rem;line-height:1.2857;letter-spacing:0em">Aa</div><div class="tmeta"><code class="tk">title-1</code><span class="tnums">1.75rem · 28px · lh 1.2857 · ls 0em</span></div></div><div class="tspec"><div class="tsample" style="font-size:1.5rem;line-height:1.3333;letter-spacing:0em">Aa</div><div class="tmeta"><code class="tk">title-2</code><span class="tnums">1.5rem · 24px · lh 1.3333 · ls 0em</span></div></div><div class="tspec"><div class="tsample" style="font-size:1.125rem;line-height:1.4444;letter-spacing:0em">Aa</div><div class="tmeta"><code class="tk">title-3</code><span class="tnums">1.125rem · 18px · lh 1.4444 · ls 0em</span></div></div><div class="tspec"><div class="tsample" style="font-size:1rem;line-height:1.5;letter-spacing:0em">Aa</div><div class="tmeta"><code class="tk">title-4</code><span class="tnums">1rem · 16px · lh 1.5 · ls 0em</span></div></div><div class="tspec"><div class="tsample" style="font-size:0.875rem;line-height:1.2857;letter-spacing:0em">Aa</div><div class="tmeta"><code class="tk">title-5</code><span class="tnums">0.875rem · 14px · lh 1.2857 · ls 0em</span></div></div><div class="tspec"><div class="tsample" style="font-size:0.875rem;line-height:1.2857;letter-spacing:0em">Aa</div><div class="tmeta"><code class="tk">title-6</code><span class="tnums">0.875rem · 14px · lh 1.2857 · ls 0em</span></div></div></div></div>
+  </div>
+  <div class="grid2" style="margin-top:26px">
+    <div class="grp"><h4>Desktop — body</h4><div class="tlist"><div class="tspec"><div class="tsample" style="font-size:1.25rem;line-height:1.8;letter-spacing:0em">Aa</div><div class="tmeta"><code class="tk">body-1</code><span class="tnums">1.25rem · 20px · lh 1.8 · ls 0em</span></div></div><div class="tspec"><div class="tsample" style="font-size:1.125rem;line-height:1.7778;letter-spacing:-0.0018em">Aa</div><div class="tmeta"><code class="tk">body-2</code><span class="tnums">1.125rem · 18px · lh 1.7778 · ls -0.0018em</span></div></div><div class="tspec"><div class="tsample" style="font-size:1rem;line-height:1.75;letter-spacing:-0.0016em">Aa</div><div class="tmeta"><code class="tk">body-3</code><span class="tnums">1rem · 16px · lh 1.75 · ls -0.0016em</span></div></div><div class="tspec"><div class="tsample" style="font-size:0.875rem;line-height:1.7143;letter-spacing:-0.0014em">Aa</div><div class="tmeta"><code class="tk">body-4</code><span class="tnums">0.875rem · 14px · lh 1.7143 · ls -0.0014em</span></div></div></div></div>
+    <div class="grp"><h4>Mobile — body</h4><div class="tlist"><div class="tspec"><div class="tsample" style="font-size:1.125rem;line-height:1.5556;letter-spacing:0em">Aa</div><div class="tmeta"><code class="tk">body-1</code><span class="tnums">1.125rem · 18px · lh 1.5556 · ls 0em</span></div></div><div class="tspec"><div class="tsample" style="font-size:1rem;line-height:1.75;letter-spacing:-0.0016em">Aa</div><div class="tmeta"><code class="tk">body-2</code><span class="tnums">1rem · 16px · lh 1.75 · ls -0.0016em</span></div></div><div class="tspec"><div class="tsample" style="font-size:0.9375rem;line-height:1.7333;letter-spacing:-0.0015em">Aa</div><div class="tmeta"><code class="tk">body-3</code><span class="tnums">0.9375rem · 15px · lh 1.7333 · ls -0.0015em</span></div></div><div class="tspec"><div class="tsample" style="font-size:0.875rem;line-height:1.7143;letter-spacing:-0.0014em">Aa</div><div class="tmeta"><code class="tk">body-4</code><span class="tnums">0.875rem · 14px · lh 1.7143 · ls -0.0014em</span></div></div></div></div>
+  </div>
+  <div class="grid2" style="margin-top:26px">
+    <div class="grp"><h4>Desktop — headline</h4><div class="tlist"><div class="tspec"><div class="tsample" style="font-size:3.5rem;line-height:1.2857;letter-spacing:0em">Aa</div><div class="tmeta"><code class="tk">headline-1</code><span class="tnums">3.5rem · 56px · lh 1.2857 · ls 0em</span></div></div></div></div>
+    <div class="grp"><h4>Mobile — headline</h4><div class="tlist"><div class="tspec"><div class="tsample" style="font-size:2rem;line-height:1.1875;letter-spacing:0em">Aa</div><div class="tmeta"><code class="tk">headline-1</code><span class="tnums">2rem · 32px · lh 1.1875 · ls 0em</span></div></div></div></div>
+  </div>
+  <h3>Labels &amp; weights</h3>
+  <div class="grid2">
+    <div class="grp"><h4>Labels — shared across breakpoints</h4><div class="tlist"><div class="tspec"><div class="tsample" style="font-size:1rem;line-height:1.5;letter-spacing:0em">Aa</div><div class="tmeta"><code class="tk">label-1</code><span class="tnums">1rem · 16px · lh 1.5 · ls 0em</span></div></div><div class="tspec"><div class="tsample" style="font-size:0.875rem;line-height:1.7143;letter-spacing:0em">Aa</div><div class="tmeta"><code class="tk">label-2</code><span class="tnums">0.875rem · 14px · lh 1.7143 · ls 0em</span></div></div><div class="tspec"><div class="tsample" style="font-size:0.75rem;line-height:1.3333;letter-spacing:-0.0012em">Aa</div><div class="tmeta"><code class="tk">label-3</code><span class="tnums">0.75rem · 12px · lh 1.3333 · ls -0.0012em</span></div></div></div></div>
+    <div class="grp"><h4>Weight tokens</h4>
+    <p class="note">Weights are bound to <em>role</em>, not number. Body text has two prominence steps above default; headings and labels have one.</p>
+    <div class="tblwrap"><table class="kv"><thead><tr><th>Token</th><th>Weight</th></tr></thead><tbody><tr><td><code class="tk">font-weight-headings-default</code></td><td class="tnums">500</td></tr><tr><td><code class="tk">font-weight-headings-prominent-1</code></td><td class="tnums">600</td></tr><tr><td><code class="tk">font-weight-body-default</code></td><td class="tnums">400</td></tr><tr><td><code class="tk">font-weight-body-prominent-1</code></td><td class="tnums">500</td></tr><tr><td><code class="tk">font-weight-body-prominent-2</code></td><td class="tnums">600</td></tr><tr><td><code class="tk">font-weight-labels-default</code></td><td class="tnums">500</td></tr><tr><td><code class="tk">font-weight-labels-prominent-1</code></td><td class="tnums">600</td></tr></tbody></table></div></div>
+  </div>
+</section>
+
+<section id="space">
+  <div class="shead"><h2>Spacing</h2><span class="cnt">35 steps</span></div>
+  <p class="lede">A 4px base grid with half-steps at the bottom end where dense UI needs them
+  (<code>0-5</code> through <code>3-5</code>), thinning to 4-unit jumps past <code>spacing-12</code>. The
+  identical ramp is duplicated as <code>--container-*</code> for sizing, so width and padding draw from the
+  same numbers under different names.</p>
+  <div class="splist"><div class="sp"><code class="tk">spacing-0</code><span class="sptrack"><span class="spbar" style="width:0.000%"></span></span><span class="tnums">0rem · 0px</span></div><div class="sp"><code class="tk">spacing-0-5</code><span class="sptrack"><span class="spbar" style="width:0.521%"></span></span><span class="tnums">0.125rem · 2px</span></div><div class="sp"><code class="tk">spacing-1</code><span class="sptrack"><span class="spbar" style="width:1.042%"></span></span><span class="tnums">0.25rem · 4px</span></div><div class="sp"><code class="tk">spacing-1-5</code><span class="sptrack"><span class="spbar" style="width:1.562%"></span></span><span class="tnums">0.375rem · 6px</span></div><div class="sp"><code class="tk">spacing-2</code><span class="sptrack"><span class="spbar" style="width:2.083%"></span></span><span class="tnums">0.5rem · 8px</span></div><div class="sp"><code class="tk">spacing-2-5</code><span class="sptrack"><span class="spbar" style="width:2.604%"></span></span><span class="tnums">0.625rem · 10px</span></div><div class="sp"><code class="tk">spacing-3</code><span class="sptrack"><span class="spbar" style="width:3.125%"></span></span><span class="tnums">0.75rem · 12px</span></div><div class="sp"><code class="tk">spacing-3-5</code><span class="sptrack"><span class="spbar" style="width:3.646%"></span></span><span class="tnums">0.875rem · 14px</span></div><div class="sp"><code class="tk">spacing-4</code><span class="sptrack"><span class="spbar" style="width:4.167%"></span></span><span class="tnums">1rem · 16px</span></div><div class="sp"><code class="tk">spacing-5</code><span class="sptrack"><span class="spbar" style="width:5.208%"></span></span><span class="tnums">1.25rem · 20px</span></div><div class="sp"><code class="tk">spacing-6</code><span class="sptrack"><span class="spbar" style="width:6.250%"></span></span><span class="tnums">1.5rem · 24px</span></div><div class="sp"><code class="tk">spacing-7</code><span class="sptrack"><span class="spbar" style="width:7.292%"></span></span><span class="tnums">1.75rem · 28px</span></div><div class="sp"><code class="tk">spacing-8</code><span class="sptrack"><span class="spbar" style="width:8.333%"></span></span><span class="tnums">2rem · 32px</span></div><div class="sp"><code class="tk">spacing-9</code><span class="sptrack"><span class="spbar" style="width:9.375%"></span></span><span class="tnums">2.25rem · 36px</span></div><div class="sp"><code class="tk">spacing-10</code><span class="sptrack"><span class="spbar" style="width:10.417%"></span></span><span class="tnums">2.5rem · 40px</span></div><div class="sp"><code class="tk">spacing-11</code><span class="sptrack"><span class="spbar" style="width:11.458%"></span></span><span class="tnums">2.75rem · 44px</span></div><div class="sp"><code class="tk">spacing-12</code><span class="sptrack"><span class="spbar" style="width:12.500%"></span></span><span class="tnums">3rem · 48px</span></div><div class="sp"><code class="tk">spacing-14</code><span class="sptrack"><span class="spbar" style="width:14.583%"></span></span><span class="tnums">3.5rem · 56px</span></div><div class="sp"><code class="tk">spacing-16</code><span class="sptrack"><span class="spbar" style="width:16.667%"></span></span><span class="tnums">4rem · 64px</span></div><div class="sp"><code class="tk">spacing-18</code><span class="sptrack"><span class="spbar" style="width:18.750%"></span></span><span class="tnums">4.5rem · 72px</span></div><div class="sp"><code class="tk">spacing-20</code><span class="sptrack"><span class="spbar" style="width:20.833%"></span></span><span class="tnums">5rem · 80px</span></div><div class="sp"><code class="tk">spacing-24</code><span class="sptrack"><span class="spbar" style="width:25.000%"></span></span><span class="tnums">6rem · 96px</span></div><div class="sp"><code class="tk">spacing-28</code><span class="sptrack"><span class="spbar" style="width:29.167%"></span></span><span class="tnums">7rem · 112px</span></div><div class="sp"><code class="tk">spacing-32</code><span class="sptrack"><span class="spbar" style="width:33.333%"></span></span><span class="tnums">8rem · 128px</span></div><div class="sp"><code class="tk">spacing-36</code><span class="sptrack"><span class="spbar" style="width:37.500%"></span></span><span class="tnums">9rem · 144px</span></div><div class="sp"><code class="tk">spacing-40</code><span class="sptrack"><span class="spbar" style="width:41.667%"></span></span><span class="tnums">10rem · 160px</span></div><div class="sp"><code class="tk">spacing-44</code><span class="sptrack"><span class="spbar" style="width:45.833%"></span></span><span class="tnums">11rem · 176px</span></div><div class="sp"><code class="tk">spacing-48</code><span class="sptrack"><span class="spbar" style="width:50.000%"></span></span><span class="tnums">12rem · 192px</span></div><div class="sp"><code class="tk">spacing-52</code><span class="sptrack"><span class="spbar" style="width:54.167%"></span></span><span class="tnums">13rem · 208px</span></div><div class="sp"><code class="tk">spacing-56</code><span class="sptrack"><span class="spbar" style="width:58.333%"></span></span><span class="tnums">14rem · 224px</span></div><div class="sp"><code class="tk">spacing-60</code><span class="sptrack"><span class="spbar" style="width:62.500%"></span></span><span class="tnums">15rem · 240px</span></div><div class="sp"><code class="tk">spacing-64</code><span class="sptrack"><span class="spbar" style="width:66.667%"></span></span><span class="tnums">16rem · 256px</span></div><div class="sp"><code class="tk">spacing-72</code><span class="sptrack"><span class="spbar" style="width:75.000%"></span></span><span class="tnums">18rem · 288px</span></div><div class="sp"><code class="tk">spacing-80</code><span class="sptrack"><span class="spbar" style="width:83.333%"></span></span><span class="tnums">20rem · 320px</span></div><div class="sp"><code class="tk">spacing-96</code><span class="sptrack"><span class="spbar" style="width:83.333%"></span></span><span class="tnums">24rem · 384px</span></div></div>
+  <h3>Named containers</h3>
+  <div class="tblwrap"><table class="kv"><thead><tr><th>Token</th><th>Width</th></tr></thead><tbody><tr><td><code class="tk">container-none</code></td><td class="tnums">none</td></tr><tr><td><code class="tk">container-modal</code></td><td class="tnums">32.5rem</td></tr><tr><td><code class="tk">container-toast</code></td><td class="tnums">45rem</td></tr></tbody></table></div>
+</section>
+
+<section id="radius">
+  <div class="shead"><h2>Radius</h2><span class="cnt">15 primitive · 34 component</span></div>
+  <p class="lede">Two tiers. The primitive ramp is the raw vocabulary; the component tier assigns one of those
+  values to a specific part, so a button's corner can be retuned system-wide without touching anything else.
+  <code>radius-full</code> is <code>624.9375rem</code> — the classic large-number pill trick.</p>
+  <h4>Primitive ramp</h4>
+  <div class="radlist" style="grid-template-columns:repeat(auto-fill,minmax(168px,1fr))"><div class="rad"><span class="radbox" style="border-radius:0.0px"></span><code class="tk">radius-none</code><span class="tnums">0rem</span></div><div class="rad"><span class="radbox" style="border-radius:2.0px"></span><code class="tk">radius-2xs</code><span class="tnums">0.125rem</span></div><div class="rad"><span class="radbox" style="border-radius:4.0px"></span><code class="tk">radius-xs</code><span class="tnums">0.25rem</span></div><div class="rad"><span class="radbox" style="border-radius:6.0px"></span><code class="tk">radius-s</code><span class="tnums">0.375rem</span></div><div class="rad"><span class="radbox" style="border-radius:8.0px"></span><code class="tk">radius-sm</code><span class="tnums">0.5rem</span></div><div class="rad"><span class="radbox" style="border-radius:12.0px"></span><code class="tk">radius-ml</code><span class="tnums">0.75rem</span></div><div class="rad"><span class="radbox" style="border-radius:16.0px"></span><code class="tk">radius-xl</code><span class="tnums">1rem</span></div><div class="rad"><span class="radbox" style="border-radius:24.0px"></span><code class="tk">radius-4xl</code><span class="tnums">1.5rem</span></div><div class="rad"><span class="radbox" style="border-radius:28px"></span><code class="tk">radius-full</code><span class="tnums">624.9375rem</span></div><div class="rad"><span class="radbox" style="border-radius:28.0px"></span><code class="tk">radius-5xl</code><span class="tnums">1.75rem</span></div><div class="rad"><span class="radbox" style="border-radius:28px"></span><code class="tk">radius-6xl</code><span class="tnums">2rem</span></div><div class="rad"><span class="radbox" style="border-radius:10.0px"></span><code class="tk">radius-m</code><span class="tnums">0.625rem</span></div><div class="rad"><span class="radbox" style="border-radius:14.0px"></span><code class="tk">radius-l</code><span class="tnums">0.875rem</span></div><div class="rad"><span class="radbox" style="border-radius:18.0px"></span><code class="tk">radius-2xl</code><span class="tnums">1.125rem</span></div><div class="rad"><span class="radbox" style="border-radius:20.0px"></span><code class="tk">radius-3xl</code><span class="tnums">1.25rem</span></div></div>
+  <h3>Component rounding</h3>
+  <p class="lede">Worth reading as evidence of intent: every <code>button-rounding-*</code> size resolves to the
+  same <code>0.375rem</code>, so buttons stay visually consistent across sizes — but each has its own token,
+  ready to diverge. Focus rings are deliberately 0.5rem, one step rounder than the button they wrap.</p>
+  <div class="radlist" style="grid-template-columns:repeat(auto-fill,minmax(290px,1fr))"><div class="rad"><span class="radbox" style="border-radius:4.0px"></span><code class="tk">radius-global-rounding-xs</code><span class="tnums">0.25rem</span></div><div class="rad"><span class="radbox" style="border-radius:6.0px"></span><code class="tk">radius-global-rounding-s</code><span class="tnums">0.375rem</span></div><div class="rad"><span class="radbox" style="border-radius:8.0px"></span><code class="tk">radius-global-rounding-m</code><span class="tnums">0.5rem</span></div><div class="rad"><span class="radbox" style="border-radius:10.0px"></span><code class="tk">radius-global-rounding-l</code><span class="tnums">0.625rem</span></div><div class="rad"><span class="radbox" style="border-radius:12.0px"></span><code class="tk">radius-global-rounding-xl</code><span class="tnums">0.75rem</span></div><div class="rad"><span class="radbox" style="border-radius:6.0px"></span><code class="tk">radius-input-rounding-default</code><span class="tnums">0.375rem</span></div><div class="rad"><span class="radbox" style="border-radius:0.0px"></span><code class="tk">radius-list-rounding-actions</code><span class="tnums">0rem</span></div><div class="rad"><span class="radbox" style="border-radius:16.0px"></span><code class="tk">radius-list-rounding-drawer</code><span class="tnums">1rem</span></div><div class="rad"><span class="radbox" style="border-radius:12.0px"></span><code class="tk">radius-modal-rounding-default</code><span class="tnums">0.75rem</span></div><div class="rad"><span class="radbox" style="border-radius:8.0px"></span><code class="tk">radius-toast-rounding-default</code><span class="tnums">0.5rem</span></div><div class="rad"><span class="radbox" style="border-radius:8.0px"></span><code class="tk">radius-tooltip-rounding-default</code><span class="tnums">0.5rem</span></div><div class="rad"><span class="radbox" style="border-radius:6.0px"></span><code class="tk">radius-button-rounding-m</code><span class="tnums">0.375rem</span></div><div class="rad"><span class="radbox" style="border-radius:8.0px"></span><code class="tk">radius-alert-rounding-default</code><span class="tnums">0.5rem</span></div><div class="rad"><span class="radbox" style="border-radius:28px"></span><code class="tk">radius-pill-rounding-default</code><span class="tnums">624.9375rem</span></div><div class="rad"><span class="radbox" style="border-radius:8.0px"></span><code class="tk">radius-button-focus-rounding-s</code><span class="tnums">0.5rem</span></div><div class="rad"><span class="radbox" style="border-radius:6.0px"></span><code class="tk">radius-list-rounding-dropdown</code><span class="tnums">0.375rem</span></div><div class="rad"><span class="radbox" style="border-radius:6.0px"></span><code class="tk">radius-button-rounding-s</code><span class="tnums">0.375rem</span></div><div class="rad"><span class="radbox" style="border-radius:6.0px"></span><code class="tk">radius-button-rounding-xs</code><span class="tnums">0.375rem</span></div><div class="rad"><span class="radbox" style="border-radius:6.0px"></span><code class="tk">radius-button-rounding-l</code><span class="tnums">0.375rem</span></div><div class="rad"><span class="radbox" style="border-radius:8.0px"></span><code class="tk">radius-button-focus-rounding-xs</code><span class="tnums">0.5rem</span></div><div class="rad"><span class="radbox" style="border-radius:8.0px"></span><code class="tk">radius-button-focus-rounding-m</code><span class="tnums">0.5rem</span></div><div class="rad"><span class="radbox" style="border-radius:8.0px"></span><code class="tk">radius-button-focus-rounding-l</code><span class="tnums">0.5rem</span></div><div class="rad"><span class="radbox" style="border-radius:6.0px"></span><code class="tk">radius-file-upload-container-rounding-default</code><span class="tnums">0.375rem</span></div><div class="rad"><span class="radbox" style="border-radius:6.0px"></span><code class="tk">radius-file-upload-file-card-rounding-default</code><span class="tnums">0.375rem</span></div><div class="rad"><span class="radbox" style="border-radius:6.0px"></span><code class="tk">radius-segmented-control-rounding-segment</code><span class="tnums">0.375rem</span></div><div class="rad"><span class="radbox" style="border-radius:8.0px"></span><code class="tk">radius-segmented-control-rounding-segmented-control</code><span class="tnums">0.5rem</span></div><div class="rad"><span class="radbox" style="border-radius:28px"></span><code class="tk">radius-avatar-rounding-default</code><span class="tnums">624.9375rem</span></div><div class="rad"><span class="radbox" style="border-radius:4.0px"></span><code class="tk">radius-progress-rounding-default</code><span class="tnums">0.25rem</span></div><div class="rad"><span class="radbox" style="border-radius:4.0px"></span><code class="tk">radius-slider-rounding-default</code><span class="tnums">0.25rem</span></div><div class="rad"><span class="radbox" style="border-radius:28px"></span><code class="tk">radius-stepper-rounding-icon</code><span class="tnums">624.9375rem</span></div><div class="rad"><span class="radbox" style="border-radius:6.0px"></span><code class="tk">radius-accordion-rounding-filled</code><span class="tnums">0.375rem</span></div><div class="rad"><span class="radbox" style="border-radius:0.0px"></span><code class="tk">radius-button-focus-rounding-none</code><span class="tnums">0rem</span></div><div class="rad"><span class="radbox" style="border-radius:8.0px"></span><code class="tk">radius-accordion-rounding-focus</code><span class="tnums">0.5rem</span></div><div class="rad"><span class="radbox" style="border-radius:0.0px"></span><code class="tk">radius-accordion-rounding-outlined</code><span class="tnums">0rem</span></div></div>
+</section>
+
+<section id="depth">
+  <div class="shead"><h2>Depth &amp; motion</h2><span class="cnt">6 + 6 + 8</span></div>
+  <p class="lede">Shadows are composed from alpha-only black tokens
+  (<code>shadow-4-base</code> … <code>shadow-25-base</code>) that get <em>stronger</em> in dark mode rather
+  than being replaced. Levels 2–5 stack two layers; <code>drop-shadow-*</code> mirrors the ramp for filter use.</p>
+  <div class="shadowdemo">
+    <div class="shbox" style="box-shadow:0 2px 10px rgb(0 0 0 / .06)">shadow-1</div>
+    <div class="shbox" style="box-shadow:0 1px 3px rgb(0 0 0 / .1),0 1px 2px rgb(0 0 0 / .06)">shadow-2</div>
+    <div class="shbox" style="box-shadow:0 4px 6px rgb(0 0 0 / .1),0 2px 4px rgb(0 0 0 / .06)">shadow-3</div>
+    <div class="shbox" style="box-shadow:0 10px 15px rgb(0 0 0 / .1),0 4px 6px rgb(0 0 0 / .06)">shadow-4</div>
+    <div class="shbox" style="box-shadow:0 20px 25px rgb(0 0 0 / .1),0 10px 10px rgb(0 0 0 / .04)">shadow-5</div>
+    <div class="shbox" style="box-shadow:0 25px 50px -12px rgb(0 0 0 / .25)">shadow-6</div>
+  </div>
+  <div class="grid2" style="margin-top:30px">
+    <div class="grp"><h4>Blur</h4><div class="tblwrap"><table class="kv"><thead><tr><th>Token</th><th>Value</th></tr></thead><tbody><tr><td><code class="tk">blur-0</code></td><td class="tnums">0px</td></tr><tr><td><code class="tk">blur-1</code></td><td class="tnums">2px</td></tr><tr><td><code class="tk">blur-2</code></td><td class="tnums">4px</td></tr><tr><td><code class="tk">blur-3</code></td><td class="tnums">6px</td></tr><tr><td><code class="tk">blur-4</code></td><td class="tnums">8px</td></tr><tr><td><code class="tk">blur-5</code></td><td class="tnums">12px</td></tr><tr><td><code class="tk">blur-6</code></td><td class="tnums">20px</td></tr><tr><td><code class="tk">blur-7</code></td><td class="tnums">32px</td></tr></tbody></table></div></div>
+    <div class="grp"><h4>Animation</h4>
+    <p class="note">Five named animations only — drawer transit in both directions and a loader spin. Motion is deliberately a very small part of this system.</p>
+    <div class="tblwrap"><table class="kv"><thead><tr><th>Token</th><th>Value</th></tr></thead><tbody><tr><td><code class="tk">animate-drawer-enter-right</code></td><td class="tnums">drawer-slide-right 0.3s</td></tr><tr><td><code class="tk">animate-drawer-exit-right</code></td><td class="tnums">drawer-slide-right 0.3s reverse</td></tr><tr><td><code class="tk">animate-drawer-enter-left</code></td><td class="tnums">drawer-slide-left 0.3s</td></tr><tr><td><code class="tk">animate-drawer-exit-left</code></td><td class="tnums">drawer-slide-left 0.3s reverse</td></tr><tr><td><code class="tk">animate-loader-spin</code></td><td class="tnums">loader-spin 1s linear infinite</td></tr></tbody></table></div></div>
+  </div>
+</section>
+
+<section id="layout">
+  <div class="shead"><h2>Layout</h2><span class="cnt">4 breakpoints · 8 layers</span></div>
+  <p class="lede">Only four breakpoints, and they are unusually far apart —
+  <code>lg</code> jumps straight from 37.5rem to 80rem. The z-index ramp is named by role, which is what stops
+  the usual <code>z-50</code> arms race.</p>
+  <div class="grid2">
+    <div class="grp"><h4>Breakpoints</h4><div class="tblwrap"><table class="kv"><thead><tr><th>Token</th><th>Min-width</th></tr></thead><tbody><tr><td><code class="tk">breakpoint-sm</code></td><td class="tnums">23.75rem  (380px)</td></tr><tr><td><code class="tk">breakpoint-md</code></td><td class="tnums">37.5rem  (600px)</td></tr><tr><td><code class="tk">breakpoint-lg</code></td><td class="tnums">80rem  (1280px)</td></tr><tr><td><code class="tk">breakpoint-xl</code></td><td class="tnums">105rem  (1680px)</td></tr></tbody></table></div></div>
+    <div class="grp"><h4>Z-index</h4><div class="tblwrap"><table class="kv"><thead><tr><th>Token</th><th>Layer</th></tr></thead><tbody><tr><td><code class="tk">z-index-base</code></td><td class="tnums">0</td></tr><tr><td><code class="tk">z-index-raised</code></td><td class="tnums">1</td></tr><tr><td><code class="tk">z-index-sticky</code></td><td class="tnums">10</td></tr><tr><td><code class="tk">z-index-drawer</code></td><td class="tnums">20</td></tr><tr><td><code class="tk">z-index-modal</code></td><td class="tnums">30</td></tr><tr><td><code class="tk">z-index-bottom-sheet</code></td><td class="tnums">40</td></tr><tr><td><code class="tk">z-index-drop-target</code></td><td class="tnums">50</td></tr><tr><td><code class="tk">z-index-overlay-above</code></td><td class="tnums">100</td></tr></tbody></table></div></div>
+  </div>
+</section>
+
+<section id="components">
+  <div class="shead"><h2>Components</h2><span class="cnt">43 components · 7 hooks</span></div>
+  <p class="lede">Everything comes from <code>@povio/ui</code>, built on React Aria Components — so keyboard
+  behaviour, focus management and ARIA wiring are inherited rather than reimplemented. The project rules forbid
+  recreating any of these with a native element plus Tailwind. Badges show how many times each appears in
+  <code>apps/fe/src</code>.</p>
+  <div class="cgrid"><div class="cgroup"><h4>Text &amp; identity <span class="cgn">3</span></h4><p class="note">Typography, Link, Tag — the three that carry all user-facing text.</p><div class="clist"><div class="cchip"><code>Typography</code><span class="cct">39</span></div><div class="cchip"><code>Link</code><span class="cct">5</span></div><div class="cchip"><code>Tag</code><span class="cct">1</span></div></div></div><div class="cgroup"><h4>Actions <span class="cgn">6</span></h4><p class="note">Six action components. All share the variant × color × size token matrix above.</p><div class="clist"><div class="cchip"><code>Button</code><span class="cct">25</span></div><div class="cchip"><code>TextButton</code><span class="cct">7</span></div><div class="cchip"><code>IconButton</code><span class="cct">4</span></div><div class="cchip"><code>InlineIconButton</code><span class="cct">3</span></div><div class="cchip"><code>PillButton</code><span class="cct">1</span></div><div class="cchip"><code>ToggleButton</code><span class="cct">1</span></div></div></div><div class="cgroup"><h4>Text inputs <span class="cgn">4</span></h4><p class="note">Imported from <code>@povio/ui/tanstack</code> and bound with <code>field={ form, name }</code>.</p><div class="clist"><div class="cchip"><code>TextInput</code><span class="cct">8</span></div><div class="cchip"><code>PasswordInput</code><span class="cct">4</span></div><div class="cchip"><code>TextArea</code><span class="cct">3</span></div><div class="cchip"><code>NumberInput</code><span class="cct">1</span></div></div></div><div class="cgroup"><h4>Choice &amp; selection <span class="cgn">8</span></h4><div class="clist"><div class="cchip"><code>Select</code><span class="cct">2</span></div><div class="cchip"><code>Autocomplete</code><span class="cct">1</span></div><div class="cchip"><code>QueryAutocomplete</code><span class="cct">5</span></div><div class="cchip"><code>Checkbox</code><span class="cct">1</span></div><div class="cchip"><code>RadioGroup</code><span class="cct">1</span></div><div class="cchip"><code>Toggle</code><span class="cct">2</span></div><div class="cchip"><code>Segment</code><span class="cct">3</span></div><div class="cchip"><code>Slider</code><span class="cct">1</span></div></div></div><div class="cgroup"><h4>Date &amp; time <span class="cgn">4</span></h4><p class="note">Four pickers over the same calendar primitives; <code>DateUtils</code> ships alongside them.</p><div class="clist"><div class="cchip"><code>DatePicker</code><span class="cct">3</span></div><div class="cchip"><code>DateRangePicker</code><span class="cct">3</span></div><div class="cchip"><code>DateTimePicker</code><span class="cct">1</span></div><div class="cchip"><code>TimePicker</code><span class="cct">1</span></div></div></div><div class="cgroup"><h4>File upload <span class="cgn">2</span></h4><div class="clist"><div class="cchip"><code>FileUpload</code><span class="cct">2</span></div><div class="cchip"><code>InputUpload</code><span class="cct">1</span></div></div></div><div class="cgroup"><h4>Data display <span class="cgn">3</span></h4><p class="note"><code>Table</code> and <code>InfiniteTable</code> take a <code>columns</code> definition and an <code>onRowClick</code> handler.</p><div class="clist"><div class="cchip"><code>Table</code><span class="cct">1</span></div><div class="cchip"><code>InfiniteTable</code><span class="cct">1</span></div><div class="cchip"><code>Loader</code><span class="cct">1</span></div></div></div><div class="cgroup"><h4>Overlays <span class="cgn">7</span></h4><p class="note">Every overlay takes a <code>trigger</code> element and renders through a portal.</p><div class="clist"><div class="cchip"><code>Modal</code><span class="cct">3</span></div><div class="cchip"><code>Confirmation</code><span class="cct">6</span></div><div class="cchip"><code>Drawer</code><span class="cct">2</span></div><div class="cchip"><code>BottomSheet</code><span class="cct">1</span></div><div class="cchip"><code>ResponsivePopover</code><span class="cct">1</span></div><div class="cchip"><code>Menu</code><span class="cct">4</span></div><div class="cchip"><code>Tooltip</code><span class="cct">1</span></div></div></div><div class="cgroup"><h4>Feedback <span class="cgn">2</span></h4><div class="clist"><div class="cchip"><code>Alert</code><span class="cct">2</span></div><div class="cchip"><code>ToastContainer</code><span class="cct">1</span></div></div></div><div class="cgroup"><h4>Providers &amp; config <span class="cgn">4</span></h4><p class="note">Mounted once at the app root, not used per-feature.</p><div class="clist"><div class="cchip"><code>UIConfig</code><span class="cct">1</span></div><div class="cchip"><code>UIOverrides</code><span class="cct">10</span></div><div class="cchip"><code>UIRouter</code><span class="cct">1</span></div><div class="cchip"><code>LinkContext</code><span class="cct">1</span></div></div></div></div>
+
+  <h3>Actions</h3>
+  <p class="lede">Beyond <code>variant</code> and <code>color</code>, the button family takes <code>icon</code>
+  with <code>iconPosition</code>, an <code>iconOnly</code> form that promotes its label to a tooltip, and a
+  <code>link</code> prop that renders it as a router link instead of a button.</p>
+  <div class="preview"><div class="row"><span class="btn" style="--l:#005a9a;--d:#005a9a;--fgl:#ffffff;--fgd:#ffffff"><svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true" style="display:block"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span><span class="iconbtn" style="--l:#dadcdd;--d:#232526;--fgl:#4f5558;--fgd:#eaeef0"><svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true" style="display:block"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span><span class="pillbtn" style="--l:#d9e9f4;--d:#002e4f;--fgl:#004b7f;--fgd:#f0f8fe">Pill</span><span class="btn btn-text" style="--l:#005a9a;--d:#5faae0">TextButton</span><span class="btn" style="--l:#005a9a;--d:#005a9a;--fgl:#ffffff;--fgd:#ffffff"><svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true" style="display:block"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span style="margin-left:7px">Close</span></span></div></div>
+  <p class="pvcap">Button · IconButton · PillButton · TextButton · Button with icon</p>
+
+  <h3>Tag</h3>
+  <p class="lede">Tag is where the fixed status hues surface. Five colors draw from the
+  <code>interactive-subtle-*</code> matrix; four more — <code>purple</code>, <code>teal</code>,
+  <code>yellow</code>, <code>white</code> — draw from <code>support-status-*</code> and are the system's only
+  hue-named values. Those four have no real dark-mode pair, so they read as light-only.</p>
+  <div class="preview"><div class="row"><span class="tag" style="--l:#d9e9f4;--d:#002e4f;--fgl:#004b7f;--fgd:#f0f8fe;--ol:#d9e9f4;--od:#002e4f">primary</span><span class="tag" style="--l:#eaeef0;--d:#131414;--fgl:#4f5558;--fgd:#eaeef0;--ol:#eaeef0;--od:#131414">secondary</span><span class="tag" style="--l:#daf3ea;--d:#174a3f;--fgl:#1d5f4f;--fgd:#daf3ea;--ol:#daf3ea;--od:#174a3f">success</span><span class="tag" style="--l:#fde7c8;--d:#362009;--fgl:#784715;--fgd:#fde7c8;--ol:#fde7c8;--od:#362009">warning</span><span class="tag" style="--l:#f4d9d6;--d:#33100e;--fgl:#6b2620;--fgd:#f4d9d6;--ol:#f4d9d6;--od:#33100e">error</span><span class="tag" style="--l:#ede9fe;--d:#ffffff;--fgl:#5e4785;--fgd:#ffffff;--ol:#ede9fe;--od:#ffffff">purple</span><span class="tag" style="--l:#d5fbfb;--d:#ffffff;--fgl:#477b85;--fgd:#ffffff;--ol:#d5fbfb;--od:#ffffff">teal</span><span class="tag" style="--l:#fcf8cf;--d:#ffffff;--fgl:#736b08;--fgd:#ffffff;--ol:#fcf8cf;--od:#ffffff">yellow</span><span class="tag" style="--l:#ffffff;--d:#ffffff;--fgl:#4f5558;--fgd:#eaeef0;--ol:#ffffff;--od:#ffffff">white</span></div></div>
+  <p class="pvcap">9 colors: 5 semantic + 4 status</p>
+
+  <h3>Selection controls</h3>
+  <div class="preview"><div class="ctlgrid"><div class="ctl"><span class="cbx on" style="--l:#005a9a;--d:#005a9a;--fgl:#ffffff;--fgd:#ffffff"><svg viewBox="0 0 16 16" width="11" height="11" aria-hidden="true"><path d="M3 8.5l3.2 3.2L13 5" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ctl-lab" style="--fgl:#191a1b;--fgd:#eaeef0">Checked</span></div><div class="ctl"><span class="cbx" style="--ol:#c6c8c9;--od:#4f5558;--l:#ffffff;--d:#191a1b"></span><span class="ctl-lab" style="--fgl:#191a1b;--fgd:#eaeef0">Unchecked</span></div><div class="ctl"><span class="rdo on" style="--ol:#005a9a;--od:#005a9a"><span class="dot" style="--l:#005a9a;--d:#005a9a"></span></span><span class="ctl-lab" style="--fgl:#191a1b;--fgd:#eaeef0">Selected</span></div><div class="ctl"><span class="rdo" style="--ol:#c6c8c9;--od:#4f5558"></span><span class="ctl-lab" style="--fgl:#191a1b;--fgd:#eaeef0">Unselected</span></div><div class="ctl"><span class="tgl on" style="--l:#005a9a;--d:#005a9a"><span class="knob"></span></span><span class="ctl-lab" style="--fgl:#191a1b;--fgd:#eaeef0">On</span></div><div class="ctl"><span class="tgl" style="--l:#c6c8c9;--d:#4f5558"><span class="knob"></span></span><span class="ctl-lab" style="--fgl:#191a1b;--fgd:#eaeef0">Off</span></div><div class="ctl slider-ctl"><span class="sld" style="--l:#eaeef0;--d:#0c0d0d"><span class="sldfill" style="--l:#005a9a;--d:#005a9a"></span><span class="sldknob" style="--l:#005a9a;--d:#005a9a"></span></span><span class="ctl-lab" style="--fgl:#191a1b;--fgd:#eaeef0">Slider · 60%</span></div></div></div>
+  <p class="pvcap">Checkbox · RadioGroup · Toggle · Slider</p>
+
+  <h3>Segment</h3>
+  <p class="lede">Segmented control — the clearest consumer of the toggled token axis, and the reason
+  <code>radius-segmented-control-rounding-segment</code> (0.375rem) sits one step tighter than its track
+  (0.5rem).</p>
+  <div class="preview"><div class="row"><span class="segctl" style="--l:#eaeef0;--d:#0c0d0d"><span class="segitem sel" style="--l:#ffffff;--d:#191a1b;--fgl:#191a1b;--fgd:#eaeef0">Option 1</span><span class="segitem" style="--fgl:#6f7274;--fgd:#b0b2b3">Option 2</span><span class="segitem" style="--fgl:#6f7274;--fgd:#b0b2b3">Option 3</span></span></div></div>
+
+  <h3>Select &amp; Menu</h3>
+  <p class="lede"><code>Select</code> and <code>Autocomplete</code> both accept <code>items</code> and a
+  <code>selectionMode</code> of <code>single</code> or <code>multiple</code>.
+  <code>QueryAutocomplete</code> adds server-side search over a generated API query.</p>
+  <div class="preview"><div class="selwrap"><span class="ip selctl" style="--l:#ffffff;--d:#191a1b;--ol:#c6c8c9;--od:#232526;--fgl:#6f7274;--fgd:#b0b2b3">Select option…<svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true" style="flex:0 0 auto"><path d="M4 6.5l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="menu" style="--l:#ffffff;--d:#191a1b;--ol:#dadcdd;--od:#232526;--fgl:#191a1b;--fgd:#eaeef0"><span class="mitem" style="--hl:#dadcdd;--hd:#232526">Option 1</span><span class="mitem" style="--hl:#dadcdd;--hd:#232526">Option 2</span><span class="mitem" style="--hl:#dadcdd;--hd:#232526">Option 3</span></span></div></div>
+
+  <h3>Text inputs</h3>
+  <p class="lede">Both input variants carry a full state set. The outlined variant keeps a white fill throughout
+  and signals state entirely through its border; the filled variant moves its fill instead and only turns white
+  when active.</p>
+  <div class="grid2">
+    <div class="grp"><h4>Outlined</h4><div class="preview">
+      <div class="ipwrap"><span class="iplabel">idle</span><span class="ip" style="--l:#ffffff;--d:#191a1b;--ol:#c6c8c9;--od:#232526;--fgl:#6f7274;--fgd:#b0b2b3">Email address</span></div><div class="ipwrap"><span class="iplabel">hover</span><span class="ip" style="--l:#ffffff;--d:#191a1b;--ol:#2e8ed2;--od:#006ab6;--fgl:#191a1b;--fgd:#eaeef0">Email address</span></div>
+      <div class="ipwrap"><span class="iplabel">active</span><span class="ip" style="--l:#ffffff;--d:#191a1b;--ol:#005a9a;--od:#2e8ed2;--fgl:#191a1b;--fgd:#eaeef0">Email address</span></div><div class="ipwrap"><span class="iplabel">error</span><span class="ip" style="--l:#ffffff;--d:#191a1b;--ol:#b8453a;--od:#b8453a;--fgl:#191a1b;--fgd:#eaeef0">Email address</span></div>
+      <div class="ipwrap"><span class="iplabel">disabled</span><span class="ip" style="--l:#ffffff;--d:#191a1b;--ol:#dadcdd;--od:#232526;--fgl:#6f7274;--fgd:#b0b2b3">Email address</span></div>
+    </div></div>
+    <div class="grp"><h4>Filled</h4><div class="preview">
+      <div class="ipwrap"><span class="iplabel">idle</span><span class="ip" style="--l:#eaeef0;--d:#0c0d0d;--ol:#c6c8c9;--od:#4f5558;--fgl:#6f7274;--fgd:#b0b2b3">Email address</span></div><div class="ipwrap"><span class="iplabel">hover</span><span class="ip" style="--l:#eaeef0;--d:#0c0d0d;--ol:#4f5558;--od:#b0b2b3;--fgl:#191a1b;--fgd:#eaeef0">Email address</span></div>
+      <div class="ipwrap"><span class="iplabel">active</span><span class="ip" style="--l:#ffffff;--d:#191a1b;--ol:#005a9a;--od:#2e8ed2;--fgl:#191a1b;--fgd:#eaeef0">Email address</span></div><div class="ipwrap"><span class="iplabel">error</span><span class="ip" style="--l:#eaeef0;--d:#0c0d0d;--ol:#b8453a;--od:#b8453a;--fgl:#191a1b;--fgd:#eaeef0">Email address</span></div>
+      <div class="ipwrap"><span class="iplabel">disabled</span><span class="ip" style="--l:#eaeef0;--d:#0c0d0d;--ol:#c6c8c9;--od:#4f5558;--fgl:#6f7274;--fgd:#b0b2b3">Email address</span></div>
+    </div></div>
+  </div>
+
+  <h3>Table</h3>
+  <p class="lede">Alternating row backgrounds come from <code>elevation-fill-default-1</code> and
+  <code>-2</code>; the override file exposes an <code>alternatingBackground</code> switch for it.</p>
+  <div class="preview"><div class="tblwrap"><table class="demo" style="--ol:#dadcdd;--od:#232526;--fgl:#191a1b;--fgd:#eaeef0"><thead style="--l:#f8f9f9;--d:#131414;--fgl:#6f7274;--fgd:#b0b2b3"><tr><th>Name</th><th>Climate</th><th>Terrain</th></tr></thead><tbody><tr style="--l:#ffffff;--d:#191a1b"><td>Tatooine</td><td>Arid</td><td>Desert</td></tr><tr style="--l:#f8f9f9;--d:#131414"><td>Alderaan</td><td>Temperate</td><td>Grasslands</td></tr><tr style="--l:#ffffff;--d:#191a1b"><td>Hoth</td><td>Frozen</td><td>Tundra</td></tr></tbody></table></div></div>
+
+  <h3>Loader</h3>
+  <div class="preview"><div class="row" style="gap:22px"><span class="ldwrap"><span class="loader" style="--l:#005a9a;--d:#005a9a;--tl:#c6c8c9;--td:#4f5558;width:16px;height:16px"></span><span class="tnums">size="s"</span></span><span class="ldwrap"><span class="loader" style="--l:#005a9a;--d:#005a9a;--tl:#c6c8c9;--td:#4f5558;width:22px;height:22px"></span><span class="tnums">size="m"</span></span><span class="ldwrap"><span class="loader" style="--l:#005a9a;--d:#005a9a;--tl:#c6c8c9;--td:#4f5558;width:30px;height:30px"></span><span class="tnums">size="l"</span></span></div></div>
+
+  <h3>Overlays</h3>
+  <p class="lede">The scrim is a single token, <code>support-overlay</code> — black at 40% in both modes.
+  <code>Confirmation</code> is a promise-based wrapper over <code>Modal</code>: <code>await confirm(…)</code>
+  resolves to a boolean, so a destructive action reads as a straight-line <code>if</code>.</p>
+  <div class="preview"><div class="ovgrid"><div class="modalscrim" style="--l:#00000066;--d:#00000066"><span class="modalbox" style="--l:#ffffff;--d:#191a1b;--ol:#dadcdd;--od:#232526;--fgl:#191a1b;--fgd:#eaeef0"><b>Delete planet?</b><span class="msub" style="--fgl:#4f5558;--fgd:#dadcdd">This action cannot be undone.</span><span class="mrow"><span class="btn btn-outlined" style="--l:#ffffff00;--d:#ffffff00;--ol:#4f5558;--od:#4f5558;--fgl:#4f5558;--fgd:#c6c8c9">Cancel</span><span class="btn" style="--l:#005a9a;--d:#005a9a;--fgl:#ffffff;--fgd:#ffffff">Confirm</span></span></span></div><div class="tipwrap"><span class="tipbox" style="--l:#191a1b;--d:#f8f9f9;--fgl:#eaeef0;--fgd:#191a1b">Helpful extra context</span></div></div></div>
+  <p class="pvcap">Confirmation over scrim · Tooltip</p>
+
+  <h3>Feedback</h3>
+  <p class="lede"><code>useToast()</code> exposes four constructors, each accepting <code>text</code>,
+  <code>icon</code>, <code>position</code>, <code>isLoading</code> and an <code>actions</code> array.</p>
+  <div class="preview"><div class="toastgrid"><div class="toast" style="--l:#2f9276;--d:#daf3ea;--fgl:#f0fdf5;--fgd:#1d5f4f"><b>success</b><span>useToast().successToast()</span></div><div class="toast" style="--l:#d07d24;--d:#fde7c8;--fgl:#fff6eb;--fgd:#784715"><b>warning</b><span>useToast().warningToast()</span></div><div class="toast" style="--l:#9f362c;--d:#f4d9d6;--fgl:#fef3f2;--fgd:#6b2620"><b>error</b><span>useToast().errorToast()</span></div><div class="toast" style="--l:#191a1b;--d:#f8f9f9;--fgl:#eaeef0;--fgd:#191a1b"><b>neutral</b><span>useToast().neutralToast()</span></div></div></div>
+  <div style="margin-top:16px"><div class="alert" style="--l:#2f9276;--d:#daf3ea;--ol:#73c4aa;--od:#4caf90;--fgl:#f0fdf5;--fgd:#1d5f4f"><strong>Success</strong> — elevation-fill-success-1 on text-success-inverted-1</div><div class="alert" style="--l:#d07d24;--d:#fde7c8;--ol:#eeb15f;--od:#e2953a;--fgl:#fff6eb;--fgd:#784715"><strong>Warning</strong> — elevation-fill-warning-1 on text-warning-inverted-1</div><div class="alert" style="--l:#9f362c;--d:#f4d9d6;--ol:#b8453a;--od:#9f362c;--fgl:#fef3f2;--fgd:#6b2620"><strong>Error</strong> — elevation-fill-error-1 on text-error-inverted-1</div></div>
+  <p class="pvcap">Alert color="success | warning | error"</p>
+
+  <h3>Hooks</h3>
+  <div class="tblwrap"><table class="kv" style="max-width:620px"><thead><tr><th>Hook</th><th>Role</th></tr></thead><tbody><tr><td><code class="tk">useForm</code></td><td class="tnums">Zod-schema-driven form state; every input binds through it</td></tr><tr><td><code class="tk">useToast</code></td><td class="tnums">successToast · errorToast · warningToast · neutralToast</td></tr><tr><td><code class="tk">useFilters</code></td><td class="tnums">filter state, paired with FilterStore</td></tr><tr><td><code class="tk">useSorting</code></td><td class="tnums">table sort state</td></tr><tr><td><code class="tk">useFormValue</code></td><td class="tnums">read a single live field value</td></tr><tr><td><code class="tk">useFormAutosave</code></td><td class="tnums">persist a form as it changes</td></tr><tr><td><code class="tk">useDebounceCallback</code></td><td class="tnums">debounce any handler</td></tr></tbody></table></div>
+
+  <h3>Component APIs</h3>
+  <div class="tblwrap"><table class="kv" style="max-width:680px">
+    <thead><tr><th>Typography</th><th>Values</th></tr></thead><tbody>
+    <tr><td><code class="tk">size</code></td><td class="tnums">headline-1 · title-1…6 · body-1…4 · label-1…3</td></tr>
+    <tr><td><code class="tk">variant</code></td><td class="tnums">default · prominent-1 · prominent-2</td></tr>
+    <tr><td><code class="tk">color</code></td><td class="tnums">primary · secondary · success · warning · error</td></tr>
+    <tr><td><code class="tk">as</code></td><td class="tnums">h1…h6 · p · span</td></tr>
+    </tbody></table></div>
+  <div class="tblwrap" style="margin-top:18px"><table class="kv" style="max-width:680px">
+    <thead><tr><th>Button</th><th>Values</th></tr></thead><tbody>
+    <tr><td><code class="tk">variant</code></td><td class="tnums">contained · outlined · subtle · ghost · text</td></tr>
+    <tr><td><code class="tk">color</code></td><td class="tnums">primary · secondary · success · warning · error · dual</td></tr>
+    <tr><td><code class="tk">size</code></td><td class="tnums">xs · s · m · l · none</td></tr>
+    <tr><td><code class="tk">width</code></td><td class="tnums">fill · hug — defaults to full width</td></tr>
+    <tr><td><code class="tk">icon</code> <code class="tk">iconPosition</code> <code class="tk">iconOnly</code></td><td class="tnums">lucide component · left | right · boolean</td></tr>
+    <tr><td><code class="tk">isDisabled</code> <code class="tk">isLoading</code></td><td class="tnums">boolean — React Aria naming, not <code>disabled</code></td></tr>
+    <tr><td><code class="tk">link</code></td><td class="tnums">{ to } · { href, target } — renders as a router link</td></tr>
+    </tbody></table></div>
+  <p class="note" style="margin-top:12px"><code>color="dual"</code> has no tokens of its own — the override maps
+  it onto the <code>primary</code> token set, so it is an API affordance rather than a sixth palette.</p>
+
+  <h3>Overriding a component</h3>
+  <p class="lede">Rather than patching CSS at the call site, the template overrides component CVA definitions
+  centrally. <code>apps/fe/src/styles/overrides/</code> holds nine — button, checkbox, input, label, modal,
+  radio, table, tag and typography — each registered through
+  <code>UIOverrides.defineOverride("tag.cva", …)</code> and applied once at the root. This is the sanctioned
+  escape hatch when a design deviates from the library default.</p>
+</section>
+
+<section id="mobile">
+  <div class="shead"><h2>Mobile</h2><span class="cnt">@povio/rn-ui 1.0.0</span></div>
+  <p class="lede">The React Native app does not share this CSS. It consumes a sibling library,
+  <code>@povio/rn-ui</code>, which ships a <a href="https://github.com/Shopify/restyle">Shopify Restyle</a>
+  theme object injected once at the root — the same design decisions expressed as a JS theme rather than custom
+  properties.</p>
+  <div class="callout">
+    <h5>Two implementations, one system</h5>
+    <p>Web resolves tokens through Tailwind utilities generated from <code>@theme</code>; mobile resolves them
+    through Restyle's <code>useTheme&lt;Theme&gt;()</code>. Both libraries are versioned separately
+    (<code>3.4.0-rc.12</code> and <code>1.0.0</code>), so parity between platforms is a release-discipline
+    question, not something the type system enforces.</p>
+  </div>
+</section>
+
+<footer>
+  Extracted from <code>apps/fe/src/styles/theme.css</code>, <code>base.css</code> and <code>globals.css</code>
+  in <code>povio/tiny-template</code> at upstream commit <code>6ee9605</code>. Values are read from the source,
+  not transcribed. Component previews are HTML re-creations coloured by the real tokens, not renders of
+  <code>@povio/ui</code> itself — spacing and corner radii are approximated where the library's internals are
+  not in this repo.
+</footer>
+</main>
+</div>
+<script>
+(function(){
+  var root=document.documentElement, hint=document.getElementById('modehint');
+  var btns=document.querySelectorAll('.seg button');
+  function set(m){
+    root.setAttribute('data-mode',m);
+    btns.forEach(function(b){b.setAttribute('aria-pressed', b.dataset.m===m?'true':'false');});
+    hint.innerHTML='showing <code>'+(m==='dark'?'.dark':':root')+'</code>';
+  }
+  btns.forEach(function(b){b.addEventListener('click',function(){set(b.dataset.m);});});
+  var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  set(prefersDark?'dark':'light');
+})();
+</script>
