@@ -1,0 +1,41 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+bun-debug.log*
+lerna-debug.log*
+
+node_modules
+src/openapi
+apps/fe/src/openapi
+dist
+dist-ssr
+*.local
+.tanstack
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.env
+
+# Generated AI assistant files
+AGENTS.md
+CLAUDE.md
+.claude/rules/
+.claude/skills/
+.codex/memories/
+.codex/skills/
+.cursor/rules/
+.cursor/skills/
+
+apps/mobile/api/

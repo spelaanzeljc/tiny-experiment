@@ -1,0 +1,4 @@
+interface:
+  display_name: "Fake Backend API Tests"
+  short_description: "Write generated-client fake backend API tests"
+  default_prompt: "Use $fake-backend-api-tests to add business-logic coverage for a fake backend API module."

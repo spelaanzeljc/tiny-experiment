@@ -1,0 +1,301 @@
+{
+  "appName": "Tiny Template",
+  "appDescription": "A template for building web applications",
+  "shared": {
+    "notFound": {
+      "head": {
+        "title": "Page not found",
+        "description": "The page you are looking for doesn't exist."
+      },
+      "heading": "Page not found",
+      "subheading": "The page you are looking for doesn't exist.",
+      "homeBtn": "Go to home"
+    },
+    "errorFallback": {
+      "heading": "Something went wrong",
+      "subheading": "Error: {{error}}",
+      "retryBtn": "Try again"
+    },
+    "apiErrors": {
+      "requestFailed": "Request failed: {{error}}",
+      "unknown": "An unknown error occurred."
+    },
+    "seedData": {
+      "actionButton": "Reset seed data",
+      "confirmation": {
+        "heading": "Reset seed data?",
+        "description": "This will reset all local data to the initial seed state.",
+        "confirm": "Reset",
+        "cancel": "Cancel"
+      }
+    },
+    "actions": {
+      "back": "Back"
+    },
+    "fakeMailbox": {
+      "title": "Fake mailbox",
+      "open": "Open fake mailbox",
+      "close": "Close fake mailbox",
+      "empty": "No emails yet.",
+      "from": "From",
+      "to": "To",
+      "cc": "Cc",
+      "bcc": "Bcc",
+      "replyTo": "Reply to",
+      "openPopup": "Open popup",
+      "popupBlocked": {
+        "heading": "Email popup was blocked",
+        "description": "Your browser blocked the automatic email window. Allow popups for this site or open this message now.",
+        "open": "Open email",
+        "cancel": "Keep unread"
+      }
+    }
+  },
+  "auth": {
+    "wrapper": {
+      "title": "Administration portal",
+      "description": "Tiny",
+      "watermark": "© {{year}} Tiny • Developed and maintained by Povio"
+    },
+    "shared": {
+      "errors": {
+        "invalidCredentials": "Invalid email or password.",
+        "userAlreadyExists": "An account with this email already exists.",
+        "identityNotFound": "We could not find this account.",
+        "notConfirmed": "This account has not been confirmed yet."
+      }
+    },
+    "login": {
+      "head": {
+        "title": "Login",
+        "description": "Login to your account"
+      },
+      "form": {
+        "title": "Login",
+        "email": "Email",
+        "emailPlaceholder": "Enter your email",
+        "password": "Password",
+        "passwordPlaceholder": "Enter your password",
+        "submit": "Login",
+        "submitLoading": "Logging in...",
+        "demoLogin": "Login as demo user",
+        "noAccount": "Don't have an account?",
+        "registerLink": "Register",
+        "loginFailed": "Login failed",
+        "resetSeedData": "Reset seed data"
+      },
+      "confirmations": {
+        "resetSeed": {
+          "heading": "Reset seed data?",
+          "description": "This will reset all local data to the initial seed state.",
+          "confirm": "Reset",
+          "cancel": "Cancel"
+        }
+      }
+    },
+    "register": {
+      "head": {
+        "title": "Register",
+        "description": "Create a new account"
+      },
+      "form": {
+        "title": "Register",
+        "description": "Create a new account",
+        "email": "Email",
+        "emailPlaceholder": "Enter your email",
+        "name": "Name",
+        "namePlaceholder": "Enter your name",
+        "password": "Password",
+        "passwordPlaceholder": "Enter your password",
+        "confirmPassword": "Confirm password",
+        "confirmPasswordPlaceholder": "Confirm your password",
+        "confirmPasswordRequired": "Confirm password is required",
+        "passwordsDoNotMatch": "Passwords do not match",
+        "passwordRequirements": "Password must be at least 12 characters long.",
+        "submit": "Register",
+        "registrationFailed": "Registration failed",
+        "hasAccount": "Already have an account?",
+        "loginLink": "Login"
+      }
+    },
+    "setPassword": {
+      "form": {
+        "title": "Set your password",
+        "welcome": "Welcome, {{firstName}} {{lastName}}. Please set your password to complete your account.",
+        "tokenNote": "Enter the invitation token you received by email.",
+        "token": "Invitation token",
+        "tokenPlaceholder": "Enter your invitation token",
+        "tokenChecking": "Checking token...",
+        "tokenError": "{{error}}",
+        "invalidToken": "Invalid or expired token",
+        "email": "Email",
+        "password": "Password",
+        "passwordPlaceholder": "Enter your password",
+        "confirmPassword": "Confirm password",
+        "confirmPasswordPlaceholder": "Confirm your password",
+        "passwordRequirements": "Password must be at least 8 characters long.",
+        "submit": "Set password",
+        "setPasswordFailed": "Setting password failed",
+        "hasPassword": "Already have a password?",
+        "loginLink": "Login"
+      }
+    }
+  },
+  "layout": {
+    "header": {
+      "logo": "Tiny",
+      "openMenu": "Open menu",
+      "closeMenu": "Close menu",
+      "nav": {
+        "home": "Home",
+        "planets": "Planets",
+        "planetsFeed": "Planets feed"
+      },
+      "profile": "Profile",
+      "logout": "Logout"
+    }
+  },
+  "home": {
+    "head": {
+      "title": "Home",
+      "description": "Welcome to the app!"
+    },
+    "title": "Home",
+    "message": "Welcome to the app!"
+  },
+  "planets": {
+    "detail": {
+      "back": "Back to Planets",
+      "notFound": "Planet not found.",
+      "description": "Description",
+      "details": "Details",
+      "created": "Created",
+      "updated": "Last updated",
+      "discoveryDate": "Discovery date",
+      "createdBy": "Created by"
+    },
+    "page": {
+      "title": "Planets",
+      "headTitle": "Planets",
+      "headDescription": "Manage your planets",
+      "addPlanet": "Add planet",
+      "empty": "No planets yet. Add your first one."
+    },
+    "views": {
+      "label": "Planet view",
+      "grid": "Grid",
+      "table": "Table",
+      "infinite": "Infinite table"
+    },
+    "filters": {
+      "search": "Search",
+      "alien": "Alien",
+      "alienPlaceholder": "All aliens",
+      "discoveryDate": "Discovery date",
+      "discoveryDatePlaceholder": "Any date",
+      "clearAll": "Clear all"
+    },
+    "create": {
+      "title": "Create planet",
+      "name": "Name",
+      "namePlaceholder": "Planet name",
+      "alien": "Alien",
+      "alienPlaceholder": "Select an alien",
+      "discoveryDate": "Discovery date",
+      "discoveryDatePlaceholder": "Select a discovery date",
+      "description": "Description",
+      "descriptionPlaceholder": "Optional description",
+      "image": "Image",
+      "imageEmptyText": "No image",
+      "imageUploadText": "Upload",
+      "imageBrowseText": "Browse",
+      "submit": "Create",
+      "cancel": "Cancel",
+      "success": "Planet created",
+      "error": "Failed to create planet"
+    },
+    "edit": {
+      "title": "Edit planet",
+      "name": "Name",
+      "namePlaceholder": "Planet name",
+      "alien": "Alien",
+      "alienPlaceholder": "Select an alien",
+      "discoveryDate": "Discovery date",
+      "discoveryDatePlaceholder": "Select a discovery date",
+      "description": "Description",
+      "descriptionPlaceholder": "Optional description",
+      "image": "Image",
+      "imageEmptyText": "No image",
+      "imageUploadText": "Upload",
+      "imageBrowseText": "Browse",
+      "submit": "Save",
+      "cancel": "Cancel",
+      "success": "Planet updated",
+      "error": "Failed to update planet"
+    },
+    "card": {
+      "createdBy": "Created by {{name}} on {{date}}",
+      "alien": "Alien: {{name}}",
+      "unknownCreator": "Unknown"
+    },
+    "table": {
+      "allLoaded": "All results are shown",
+      "showing": "Showing {{displayed}} of {{total}}",
+      "name": "Name",
+      "description": "Description",
+      "alien": "Alien",
+      "discoveryDate": "Discovery date",
+      "creator": "Creator",
+      "actions": "Actions"
+    },
+    "actions": {
+      "edit": "Edit",
+      "remove": "Remove"
+    },
+    "removeConfirm": {
+      "heading": "Remove planet?",
+      "description": "Are you sure you want to remove \"{{name}}\"? This cannot be undone.",
+      "confirm": "Remove",
+      "cancel": "Cancel",
+      "success": "Planet removed",
+      "error": "Failed to remove planet"
+    }
+  },
+  "planetsFeed": {
+    "page": {
+      "title": "Planets feed",
+      "headTitle": "Planets feed",
+      "headDescription": "Scroll through planets and their aliens",
+      "empty": "No planets to show.",
+      "end": "You reached the end."
+    },
+    "card": {
+      "like": "Like ({{count}})",
+      "liked": "Liked ({{count}})",
+      "discovered": "Discovered {{date}}",
+      "alienLabel": "Alien on this planet",
+      "creatorLabel": "Created by",
+      "noAlien": "No alien assigned"
+    }
+  },
+  "profile": {
+    "head": {
+      "title": "Profile",
+      "description": "Your profile"
+    },
+    "form": {
+      "title": "Profile",
+      "description": "Update your profile details",
+      "email": "Email",
+      "emailPlaceholder": "Enter your email",
+      "name": "Name",
+      "namePlaceholder": "Enter your name",
+      "submit": "Save",
+      "submitLoading": "Saving...",
+      "notifications": {
+        "success": "Profile updated",
+        "error": "Failed to update profile"
+      }
+    }
+  }
+}

@@ -1,0 +1,56 @@
+/**
+ * Fixed IDs for deterministic seed data.
+ * Mirrors supabase/seed.sql identifiers.
+ */
+
+export const IDS = {
+  users: {
+    demo: "demo-user-0000-0000-0000-000000000001",
+  },
+  aliens: {
+    alien1: "alien-seed-0000-0000-0000-000000000001",
+    alien2: "alien-seed-0000-0000-0000-000000000002",
+    alien3: "alien-seed-0000-0000-0000-000000000003",
+    alien4: "alien-seed-0000-0000-0000-000000000004",
+    alien5: "alien-seed-0000-0000-0000-000000000005",
+    alien6: "alien-seed-0000-0000-0000-000000000006",
+    alien7: "alien-seed-0000-0000-0000-000000000007",
+    alien8: "alien-seed-0000-0000-0000-000000000008",
+    alien9: "alien-seed-0000-0000-0000-000000000009",
+    alien10: "alien-seed-0000-0000-0000-000000000010",
+    alien11: "alien-seed-0000-0000-0000-000000000011",
+    alien12: "alien-seed-0000-0000-0000-000000000012",
+  },
+  planets: {
+    planet1: "planet-seed-0000-0000-0000-000000000001",
+    planet2: "planet-seed-0000-0000-0000-000000000002",
+    planet3: "planet-seed-0000-0000-0000-000000000003",
+    planet4: "planet-seed-0000-0000-0000-000000000004",
+    planet5: "planet-seed-0000-0000-0000-000000000005",
+    planet6: "planet-seed-0000-0000-0000-000000000006",
+    planet7: "planet-seed-0000-0000-0000-000000000007",
+    planet8: "planet-seed-0000-0000-0000-000000000008",
+    planet9: "planet-seed-0000-0000-0000-000000000009",
+    planet10: "planet-seed-0000-0000-0000-000000000010",
+    planet11: "planet-seed-0000-0000-0000-000000000011",
+    planet12: "planet-seed-0000-0000-0000-000000000012",
+    planet13: "planet-seed-0000-0000-0000-000000000013",
+    planet14: "planet-seed-0000-0000-0000-000000000014",
+    planet15: "planet-seed-0000-0000-0000-000000000015",
+    planet16: "planet-seed-0000-0000-0000-000000000016",
+    planet17: "planet-seed-0000-0000-0000-000000000017",
+    planet18: "planet-seed-0000-0000-0000-000000000018",
+    planet19: "planet-seed-0000-0000-0000-000000000019",
+    planet20: "planet-seed-0000-0000-0000-000000000020",
+    planet21: "planet-seed-0000-0000-0000-000000000021",
+    planet22: "planet-seed-0000-0000-0000-000000000022",
+    planet23: "planet-seed-0000-0000-0000-000000000023",
+    planet24: "planet-seed-0000-0000-0000-000000000024",
+    planet25: "planet-seed-0000-0000-0000-000000000025",
+    planet26: "planet-seed-0000-0000-0000-000000000026",
+    planet27: "planet-seed-0000-0000-0000-000000000027",
+    planet28: "planet-seed-0000-0000-0000-000000000028",
+    planet29: "planet-seed-0000-0000-0000-000000000029",
+    planet30: "planet-seed-0000-0000-0000-000000000030",
+  },
+} as const;

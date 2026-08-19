@@ -1,0 +1,2 @@
+import type { PushNotificationTemplate } from "./pushNotificationTemplate.schema";
+export function createPushNotificationTemplateSeed(t: string): PushNotificationTemplate[] { return [{ id: "00000000-0000-4000-8000-000000000030", name: "welcome", title: "Welcome", body: "Welcome", imageUrl: null, data: null, type: "system", module: "users", description: "Default welcome notification", createdAt: t, updatedAt: t }]; }

@@ -1,0 +1,301 @@
+{
+  "appName": "Tiny Template",
+  "appDescription": "A template for building web applications",
+  "shared": {
+    "notFound": {
+      "head": {
+        "title": "Stran ni bila najdena",
+        "description": "Stran, ki jo iščete, ne obstaja."
+      },
+      "heading": "Stran ni bila najdena",
+      "subheading": "Stran, ki jo iščete, ne obstaja.",
+      "homeBtn": "Na domačo stran"
+    },
+    "errorFallback": {
+      "heading": "Nekaj je šlo narobe",
+      "subheading": "Napaka: {{error}}",
+      "retryBtn": "Poskusi znova"
+    },
+    "apiErrors": {
+      "requestFailed": "Zahteva ni uspela: {{error}}",
+      "unknown": "Prišlo je do neznane napake."
+    },
+    "seedData": {
+      "actionButton": "Ponastavi začetne podatke",
+      "confirmation": {
+        "heading": "Ponastaviti začetne podatke?",
+        "description": "Vsi lokalni podatki bodo ponastavljeni na začetno stanje.",
+        "confirm": "Ponastavi",
+        "cancel": "Prekliči"
+      }
+    },
+    "actions": {
+      "back": "Nazaj"
+    },
+    "fakeMailbox": {
+      "title": "Lažni poštni predal",
+      "open": "Odpri lažni poštni predal",
+      "close": "Zapri lažni poštni predal",
+      "empty": "Ni prejetih e-poštnih sporočil.",
+      "from": "Od",
+      "to": "Za",
+      "cc": "Kp",
+      "bcc": "Skp",
+      "replyTo": "Odgovori na",
+      "openPopup": "Odpri pojavno okno",
+      "popupBlocked": {
+        "heading": "Pojavno okno e-pošte je blokirano",
+        "description": "Brskalnik je blokiral samodejno okno e-pošte. Dovolite pojavna okna za to stran ali sporočilo odprite zdaj.",
+        "open": "Odpri e-pošto",
+        "cancel": "Pusti neprebrano"
+      }
+    }
+  },
+  "auth": {
+    "wrapper": {
+      "title": "Administrativni portal",
+      "description": "Tiny",
+      "watermark": "© {{year}} Tiny • Razvija in vzdržuje Povio"
+    },
+    "shared": {
+      "errors": {
+        "invalidCredentials": "Neveljaven e-poštni naslov ali geslo.",
+        "userAlreadyExists": "Račun s tem e-poštnim naslovom že obstaja.",
+        "identityNotFound": "Tega računa ni bilo mogoče najti.",
+        "notConfirmed": "Ta račun še ni potrjen."
+      }
+    },
+    "login": {
+      "head": {
+        "title": "Prijava",
+        "description": "Prijavite se v svoj račun"
+      },
+      "form": {
+        "title": "Prijava",
+        "email": "E-pošta",
+        "emailPlaceholder": "Vnesite svoj e-poštni naslov",
+        "password": "Geslo",
+        "passwordPlaceholder": "Vnesite svoje geslo",
+        "submit": "Prijava",
+        "submitLoading": "Prijavljanje...",
+        "demoLogin": "Prijava kot demo uporabnik",
+        "noAccount": "Nimate računa?",
+        "registerLink": "Registracija",
+        "loginFailed": "Prijava ni uspela",
+        "resetSeedData": "Ponastavi začetne podatke"
+      },
+      "confirmations": {
+        "resetSeed": {
+          "heading": "Ponastaviti začetne podatke?",
+          "description": "Vsi lokalni podatki bodo ponastavljeni na začetno stanje.",
+          "confirm": "Ponastavi",
+          "cancel": "Prekliči"
+        }
+      }
+    },
+    "register": {
+      "head": {
+        "title": "Registracija",
+        "description": "Ustvarite nov račun"
+      },
+      "form": {
+        "title": "Registracija",
+        "description": "Ustvarite nov račun",
+        "email": "E-pošta",
+        "emailPlaceholder": "Vnesite svoj e-poštni naslov",
+        "name": "Ime",
+        "namePlaceholder": "Vnesite svoje ime",
+        "password": "Geslo",
+        "passwordPlaceholder": "Vnesite svoje geslo",
+        "confirmPassword": "Potrdite geslo",
+        "confirmPasswordPlaceholder": "Potrdite svoje geslo",
+        "confirmPasswordRequired": "Potrditev gesla je obvezna",
+        "passwordsDoNotMatch": "Gesli se ne ujemata",
+        "passwordRequirements": "Geslo mora vsebovati vsaj 12 znakov.",
+        "submit": "Registriraj se",
+        "registrationFailed": "Registracija ni uspela",
+        "hasAccount": "Že imate račun?",
+        "loginLink": "Prijava"
+      }
+    },
+    "setPassword": {
+      "form": {
+        "title": "Nastavite svoje geslo",
+        "welcome": "Dobrodošli, {{firstName}} {{lastName}}. Nastavite geslo, da dokončate nastavitev računa.",
+        "tokenNote": "Vnesite povabilni žeton, ki ste ga prejeli po e-pošti.",
+        "token": "Povabilni žeton",
+        "tokenPlaceholder": "Vnesite svoj povabilni žeton",
+        "tokenChecking": "Preverjanje žetona...",
+        "tokenError": "{{error}}",
+        "invalidToken": "Neveljaven ali potekel žeton",
+        "email": "E-pošta",
+        "password": "Geslo",
+        "passwordPlaceholder": "Vnesite svoje geslo",
+        "confirmPassword": "Potrdite geslo",
+        "confirmPasswordPlaceholder": "Potrdite svoje geslo",
+        "passwordRequirements": "Geslo mora vsebovati vsaj 8 znakov.",
+        "submit": "Nastavi geslo",
+        "setPasswordFailed": "Nastavitev gesla ni uspela",
+        "hasPassword": "Že imate geslo?",
+        "loginLink": "Prijava"
+      }
+    }
+  },
+  "layout": {
+    "header": {
+      "logo": "Tiny",
+      "openMenu": "Odpri meni",
+      "closeMenu": "Zapri meni",
+      "nav": {
+        "home": "Domov",
+        "planets": "Planeti",
+        "planetsFeed": "Tok planetov"
+      },
+      "profile": "Profil",
+      "logout": "Odjava"
+    }
+  },
+  "home": {
+    "head": {
+      "title": "Domov",
+      "description": "Dobrodošli v aplikaciji!"
+    },
+    "title": "Domov",
+    "message": "Dobrodošli v aplikaciji!"
+  },
+  "planets": {
+    "detail": {
+      "back": "Nazaj na planete",
+      "notFound": "Planet ni bil najden.",
+      "description": "Opis",
+      "details": "Podrobnosti",
+      "created": "Ustvarjeno",
+      "updated": "Zadnja posodobitev",
+      "discoveryDate": "Datum odkritja",
+      "createdBy": "Ustvaril"
+    },
+    "page": {
+      "title": "Planeti",
+      "headTitle": "Planeti",
+      "headDescription": "Upravljanje planetov",
+      "addPlanet": "Dodaj planet",
+      "empty": "Planetov še ni. Dodajte prvega."
+    },
+    "views": {
+      "label": "Prikaz planetov",
+      "grid": "Mreža",
+      "table": "Tabela",
+      "infinite": "Neskončna tabela"
+    },
+    "filters": {
+      "search": "Iskanje",
+      "alien": "Tujec",
+      "alienPlaceholder": "Vsi tujci",
+      "discoveryDate": "Datum odkritja",
+      "discoveryDatePlaceholder": "Kateri koli datum",
+      "clearAll": "Počisti vse"
+    },
+    "create": {
+      "title": "Ustvari planet",
+      "name": "Ime",
+      "namePlaceholder": "Ime planeta",
+      "alien": "Tujec",
+      "alienPlaceholder": "Izberite tujca",
+      "discoveryDate": "Datum odkritja",
+      "discoveryDatePlaceholder": "Izberite datum odkritja",
+      "description": "Opis",
+      "descriptionPlaceholder": "Opcijski opis",
+      "image": "Slika",
+      "imageEmptyText": "Brez slike",
+      "imageUploadText": "Naloži",
+      "imageBrowseText": "Brskaj",
+      "submit": "Ustvari",
+      "cancel": "Prekliči",
+      "success": "Planet ustvarjen",
+      "error": "Ustvarjanje planeta ni uspelo"
+    },
+    "edit": {
+      "title": "Uredi planet",
+      "name": "Ime",
+      "namePlaceholder": "Ime planeta",
+      "alien": "Tujec",
+      "alienPlaceholder": "Izberite tujca",
+      "discoveryDate": "Datum odkritja",
+      "discoveryDatePlaceholder": "Izberite datum odkritja",
+      "description": "Opis",
+      "descriptionPlaceholder": "Opcijski opis",
+      "image": "Slika",
+      "imageEmptyText": "Brez slike",
+      "imageUploadText": "Naloži",
+      "imageBrowseText": "Brskaj",
+      "submit": "Shrani",
+      "cancel": "Prekliči",
+      "success": "Planet posodobljen",
+      "error": "Posodobitev planeta ni uspela"
+    },
+    "card": {
+      "createdBy": "Ustvaril {{name}} dne {{date}}",
+      "alien": "Tujec: {{name}}",
+      "unknownCreator": "Neznano"
+    },
+    "table": {
+      "allLoaded": "Prikazani so vsi zadetki",
+      "showing": "Prikaz {{displayed}} od {{total}}",
+      "name": "Ime",
+      "description": "Opis",
+      "alien": "Tujec",
+      "discoveryDate": "Datum odkritja",
+      "creator": "Ustvaril",
+      "actions": "Dejanja"
+    },
+    "actions": {
+      "edit": "Uredi",
+      "remove": "Odstrani"
+    },
+    "removeConfirm": {
+      "heading": "Odstraniti planet?",
+      "description": "Ali ste prepričani, da želite odstraniti \"{{name}}\"? Tega ni mogoče razveljaviti.",
+      "confirm": "Odstrani",
+      "cancel": "Prekliči",
+      "success": "Planet odstranjen",
+      "error": "Odstranitev planeta ni uspela"
+    }
+  },
+  "planetsFeed": {
+    "page": {
+      "title": "Tok planetov",
+      "headTitle": "Tok planetov",
+      "headDescription": "Pomikajte se po planetih in njihovih tujcih",
+      "empty": "Ni planetov za prikaz.",
+      "end": "Dosegli ste konec."
+    },
+    "card": {
+      "like": "Vsec mi je ({{count}})",
+      "liked": "Vsec mi je ({{count}})",
+      "discovered": "Odkrito {{date}}",
+      "alienLabel": "Tujec na tem planetu",
+      "creatorLabel": "Ustvaril",
+      "noAlien": "Tujec ni dodeljen"
+    }
+  },
+  "profile": {
+    "head": {
+      "title": "Profil",
+      "description": "Vaš profil"
+    },
+    "form": {
+      "title": "Profil",
+      "description": "Posodobite podatke profila",
+      "email": "E-pošta",
+      "emailPlaceholder": "Vnesite svoj e-poštni naslov",
+      "name": "Ime",
+      "namePlaceholder": "Vnesite svoje ime",
+      "submit": "Shrani",
+      "submitLoading": "Shranjevanje...",
+      "notifications": {
+        "success": "Profil posodobljen",
+        "error": "Posodobitev profila ni uspela"
+      }
+    }
+  }
+}

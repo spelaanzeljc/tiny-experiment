@@ -1,0 +1,103 @@
+@plugin "tailwindcss-react-aria-components";
+
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+@theme static {
+  --color-*: initial;
+  --color-inherit: inherit;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+  --radius-*: initial;
+  --radius-none: 0rem;
+  --container-*: initial;
+  --container-none: none;
+  --container-modal: 32.5rem;
+  --container-toast: 45rem;
+  --spacing-*: initial;
+  --spacing-0: 0rem;
+  --shadow-*: initial;
+  --shadow-none: none;
+  --text-*: initial;
+  --text-inherit: inherit;
+  --text-inherit--line-height: inherit;
+  --text-inherit--letter-spacing: inherit;
+  --breakpoint-*: initial;
+  --breakpoint-sm: 23.75rem;
+  --breakpoint-md: 37.5rem;
+  --breakpoint-lg: 80rem;
+  --breakpoint-xl: 105rem;
+  --rotate-*: initial;
+  --rotate-0: 0deg;
+  --rotate-45: 45deg;
+  --rotate-90: 90deg;
+  --rotate-180: 180deg;
+  --rotate-270: 270deg;
+  --rotate-360: 360deg;
+  --animate-drawer-enter-right: drawer-slide-right 0.3s;
+  --animate-drawer-exit-right: drawer-slide-right 0.3s reverse;
+  --animate-drawer-enter-left: drawer-slide-left 0.3s;
+  --animate-drawer-exit-left: drawer-slide-left 0.3s reverse;
+  --animate-loader-spin: loader-spin 1s linear infinite;
+  --z-index-base: 0;
+  --z-index-raised: 1;
+  --z-index-sticky: 10;
+  --z-index-drawer: 20;
+  --z-index-modal: 30;
+  --z-index-bottom-sheet: 40;
+  --z-index-drop-target: 50;
+  --z-index-overlay-above: 100;
+
+  @keyframes drawer-slide-right {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+  @keyframes drawer-slide-left {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+  @keyframes loader-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+}
+
+.flex-fill {
+  flex: 1 0 0;
+}
+
+:root {
+  --elevation-fill-default-2-base: 248 249 249;
+  --elevation-outline-default-1-base: 218 220 221;
+  --elevation-outline-default-2-base: 198 200 201;
+  --interactive-contained-primary-idle-base: 0 90 154;
+  --interactive-contained-primary-hover-base: 46 142 210;
+  --interactive-contained-primary-pressed-base: 95 170 224;
+  --interactive-contained-primary-disabled-base: 155 194 221;
+  --interactive-contained-primary-focus-base: 95 170 224;
+  --interactive-outlined-primary-on-idle-base: 0 90 154;
+  --interactive-outlined-primary-outline-idle-base: 0 90 154;
+  --interactive-outlined-primary-outline-hover-base: 46 142 210;
+  --interactive-text-primary-idle-base: 0 90 154;
+  --interactive-text-primary-hover-base: 46 142 210;
+  --text-default-1-base: 25 26 27;
+  --text-default-2-base: 79 85 88;
+  --text-default-3-base: 111 114 116;
+}

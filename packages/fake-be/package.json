@@ -1,0 +1,25 @@
+{
+  "name": "fake-be",
+  "version": "0.0.0",
+  "private": true,
+  "description": "tiny fake backend",
+  "type": "module",
+  "scripts": {
+    "openapi:gen": "tsx ../../scripts/tiny-openapi.ts",
+    "test": "vitest run",
+    "ts:check": "bun run --cwd ../../apps/fe tsc --noEmit --project ../../packages/fake-be/tsconfig.json"
+  },
+  "dependencies": {
+    "@orpc/contract": "^1.14.3",
+    "@orpc/openapi": "^1.14.3",
+    "@orpc/server": "^1.14.3",
+    "@orpc/zod": "^1.14.3",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.9",
+    "tsx": "^4.22.1",
+    "vite": "^8.0.0",
+    "vitest": "^3.2.4"
+  }
+}

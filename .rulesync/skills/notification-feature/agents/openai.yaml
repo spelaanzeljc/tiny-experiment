@@ -1,0 +1,4 @@
+interface:
+  display_name: "Notification Feature"
+  short_description: "Build email, push, queues, and notification flows"
+  default_prompt: "Use $notification-feature to implement this notification workflow with Tiny infrastructure."

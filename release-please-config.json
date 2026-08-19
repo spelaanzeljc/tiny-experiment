@@ -1,0 +1,13 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "bootstrap-sha": "0ab7c253f2782a3f7405b9edb0b39f807544eda3",
+  "packages": {
+    ".": {
+      "release-type": "node",
+      "package-name": "tiny-template",
+      "initial-version": "0.1.0",
+      "include-component-in-tag": false
+    }
+  }
+}
+

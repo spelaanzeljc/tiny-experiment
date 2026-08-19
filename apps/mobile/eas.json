@@ -1,0 +1,20 @@
+{
+  "build": {
+    "staging": {
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://staging.example.com"
+        // "EXPO_PUBLIC_SENTRY_DSN": "",
+        // "SENTRY_ORG": "",
+        // "SENTRY_PROJECT": ""
+      }
+    },
+    "production": {
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://production.example.com"
+        // "EXPO_PUBLIC_SENTRY_DSN": "",
+        // "SENTRY_ORG": "",
+        // "SENTRY_PROJECT": ""
+      }
+    }
+  }
+}

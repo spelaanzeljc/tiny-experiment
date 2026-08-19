@@ -1,0 +1,2 @@
+import type { EmailTemplate } from "./emailTemplate.schema";
+export function createEmailTemplateSeed(t: string): EmailTemplate[] { return [{ id: "00000000-0000-4000-8000-000000000020", name: "welcome", from: null, cc: null, bcc: null, engine: "plain", engineOptions: null, subject: "Welcome", html: null, text: "Welcome", type: "system", module: "users", description: "Default welcome email", createdAt: t, updatedAt: t }]; }

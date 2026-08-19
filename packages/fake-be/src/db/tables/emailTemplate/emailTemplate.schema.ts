@@ -1,0 +1,7 @@
+import { z } from "zod";
+import { defineTable } from "~/db/table";
+export const EmailTemplateSchema = z.object({ id: z.string(), name: z.string(), from: z.string().nullable(), cc: z.string().nullable(), bcc: z.string().nullable(), engine: z.string(), engineOptions: z.unknown().nullable(), subject: z.string().nullable(), html: z.string().nullable(), text: z.string().nullable(), type: z.string(), module: z.string().nullable(), description: z.string().nullable(), createdAt: z.string(), updatedAt: z.string() });
+export type EmailTemplate = z.infer<typeof EmailTemplateSchema>;
+export const emailTemplateTable = defineTable<"EmailTemplate", EmailTemplate, typeof EmailTemplateSchema>({ name: "EmailTemplate", schema: EmailTemplateSchema, primaryKey: "id", columns: [
+  { name: "id", type: "varchar", primaryKey: true }, { name: "name", type: "varchar" }, { name: "from", type: "varchar", nullable: true }, { name: "cc", type: "text", nullable: true }, { name: "bcc", type: "text", nullable: true }, { name: "engine", type: "varchar" }, { name: "engineOptions", type: "text", nullable: true }, { name: "subject", type: "varchar", nullable: true }, { name: "html", type: "text", nullable: true }, { name: "text", type: "text", nullable: true }, { name: "type", type: "varchar" }, { name: "module", type: "varchar", nullable: true }, { name: "description", type: "text", nullable: true }, { name: "createdAt", type: "datetime" }, { name: "updatedAt", type: "datetime" },
+] });

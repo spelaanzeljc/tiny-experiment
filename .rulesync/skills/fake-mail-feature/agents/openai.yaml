@@ -1,0 +1,4 @@
+interface:
+  display_name: "Fake Mail Feature"
+  short_description: "Add fake mail sending and mailbox flows"
+  default_prompt: "Use $fake-mail-feature to add an email-sending workflow to the fake backend."

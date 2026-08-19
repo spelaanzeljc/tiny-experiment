@@ -1,0 +1,3 @@
+.planets-filters__control-without-label label {
+  display: none !important;
+}

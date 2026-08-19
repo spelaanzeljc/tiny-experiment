@@ -1,0 +1,1993 @@
+{
+  "info": {
+    "title": "Tiny Template Fake API",
+    "description": "OpenAPI spec generated from the oRPC fake backend contract.",
+    "version": "3.0.0"
+  },
+  "servers": [
+    {
+      "url": "/",
+      "description": "Current origin"
+    }
+  ],
+  "openapi": "3.0.3",
+  "components": {
+    "schemas": {
+      "UserMeResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "nullable": true,
+            "type": "string"
+          },
+          "email": {
+            "nullable": true,
+            "type": "string",
+            "format": "email"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "email"
+        ]
+      },
+      "UserMeUpdateRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "minLength": 1,
+            "format": "email"
+          }
+        }
+      },
+      "UserPushTokensResponse": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/UserPushTokensCreateResponse"
+        }
+      },
+      "UserPushTokenCreate": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "minLength": 1
+          },
+          "provider": {
+            "type": "string",
+            "minLength": 1
+          },
+          "title": {
+            "nullable": true,
+            "type": "string"
+          },
+          "expiresAt": {
+            "nullable": true,
+            "type": "string"
+          }
+        },
+        "required": [
+          "token",
+          "provider"
+        ]
+      },
+      "UserPushTokensCreateResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "resourceName": {
+            "type": "string"
+          },
+          "resourceLabel": {
+            "nullable": true,
+            "type": "string"
+          },
+          "module": {
+            "nullable": true,
+            "type": "string"
+          },
+          "resourceId": {
+            "nullable": true,
+            "type": "string"
+          },
+          "token": {
+            "type": "string"
+          },
+          "provider": {
+            "type": "string"
+          },
+          "expiresAt": {
+            "nullable": true,
+            "type": "string"
+          },
+          "title": {
+            "nullable": true,
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "resourceName",
+          "resourceLabel",
+          "module",
+          "resourceId",
+          "token",
+          "provider",
+          "expiresAt",
+          "title",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "UserPushTokenId": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id"
+        ]
+      },
+      "UserPushTokensRemoveResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "resourceName": {
+            "type": "string"
+          },
+          "resourceLabel": {
+            "nullable": true,
+            "type": "string"
+          },
+          "module": {
+            "nullable": true,
+            "type": "string"
+          },
+          "resourceId": {
+            "nullable": true,
+            "type": "string"
+          },
+          "token": {
+            "type": "string"
+          },
+          "provider": {
+            "type": "string"
+          },
+          "expiresAt": {
+            "nullable": true,
+            "type": "string"
+          },
+          "title": {
+            "nullable": true,
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "resourceName",
+          "resourceLabel",
+          "module",
+          "resourceId",
+          "token",
+          "provider",
+          "expiresAt",
+          "title",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "UserAuthEmailGenerateRequest": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email"
+          }
+        },
+        "required": [
+          "email"
+        ]
+      },
+      "StatusResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "status",
+          "message",
+          "code"
+        ]
+      },
+      "UserAuthMagicConsumeRequest": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "code"
+        ]
+      },
+      "AuthnTokenResponse": {
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string"
+          },
+          "refreshToken": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "accessToken"
+        ]
+      },
+      "UserAuthPasswordLoginRequest": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "minLength": 1,
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
+      },
+      "UserAuthPasswordRegisterRequest": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "minLength": 1,
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 12
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
+      },
+      "AuthnTokenRequest": {
+        "type": "object",
+        "properties": {
+          "refreshToken": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "refreshToken"
+        ]
+      },
+      "MediaUploadRequest": {
+        "type": "object",
+        "properties": {
+          "resourceName": {
+            "$ref": "#/components/schemas/MediaResourceName"
+          },
+          "fileName": {
+            "type": "string",
+            "minLength": 1
+          },
+          "fileSize": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991,
+            "exclusiveMinimum": 0
+          },
+          "mimeType": {
+            "type": "string",
+            "minLength": 1
+          },
+          "method": {
+            "$ref": "#/components/schemas/MediaUploadMethod"
+          }
+        },
+        "required": [
+          "fileName",
+          "fileSize"
+        ]
+      },
+      "MediaUploadInstructionsResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "method": {
+            "$ref": "#/components/schemas/MediaUploadMethod"
+          },
+          "url": {
+            "type": "string"
+          },
+          "fields": {
+            "type": "array",
+            "items": {
+              "type": "array"
+            }
+          },
+          "provider": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "method",
+          "url",
+          "fields"
+        ]
+      },
+      "FakeMailSendDemoBody": {
+        "type": "object",
+        "properties": {
+          "variant": {
+            "$ref": "#/components/schemas/FakeMailDemoVariant"
+          }
+        },
+        "required": [
+          "variant"
+        ]
+      },
+      "FakeMailSendDemoResponse": {
+        "type": "object",
+        "properties": {
+          "mailIds": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "mailIds"
+        ]
+      },
+      "AliensGetLabelsQuery": {
+        "type": "object",
+        "properties": {
+          "search": {
+            "type": "string"
+          }
+        }
+      },
+      "AliensGetLabelsResponse": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Label"
+        }
+      },
+      "PlanetsGetAllQuery": {
+        "type": "object",
+        "properties": {
+          "filter": {
+            "$ref": "#/components/schemas/PlanetPaginateFilterParam"
+          },
+          "order": {
+            "nullable": true,
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PlanetPaginateOrderParam"
+              }
+            ]
+          }
+        }
+      },
+      "GetAllResponse": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/PlanetsGetResponseDto"
+        }
+      },
+      "PlanetsPaginateQuery": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991,
+            "exclusiveMinimum": 0
+          },
+          "cursor": {
+            "nullable": true,
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/paginationCursor"
+              }
+            ]
+          },
+          "limit": {
+            "type": "number",
+            "maximum": 20,
+            "exclusiveMinimum": 0,
+            "default": 20
+          },
+          "filter": {
+            "$ref": "#/components/schemas/PlanetPaginateFilterParam"
+          },
+          "order": {
+            "nullable": true,
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PlanetPaginateOrderParam"
+              }
+            ]
+          }
+        }
+      },
+      "PlanetsPaginateItemPaginationResponse": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "nullable": true,
+            "type": "number"
+          },
+          "cursor": {
+            "nullable": true,
+            "type": "string"
+          },
+          "nextCursor": {
+            "nullable": true,
+            "type": "string"
+          },
+          "limit": {
+            "type": "number"
+          },
+          "totalItems": {
+            "type": "number"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PlanetsPaginateItemDto"
+            }
+          }
+        },
+        "required": [
+          "limit",
+          "totalItems",
+          "items"
+        ]
+      },
+      "PlanetsLikeParams": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id"
+        ]
+      },
+      "PlanetsGetResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "alienId": {
+            "nullable": true,
+            "type": "string"
+          },
+          "discoveryDate": {
+            "nullable": true,
+            "type": "string",
+            "format": "date-time"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "nullable": true,
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "image": {
+            "nullable": true,
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PlanetImageDto"
+              }
+            ]
+          },
+          "creatorName": {
+            "type": "string"
+          },
+          "alienName": {
+            "type": "string"
+          },
+          "likesCount": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "likedByMe": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "userId",
+          "name",
+          "createdAt",
+          "updatedAt",
+          "likesCount",
+          "likedByMe"
+        ]
+      },
+      "PlanetsCreateRequestDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "alienId": {
+            "nullable": true,
+            "type": "string"
+          },
+          "discoveryDate": {
+            "nullable": true,
+            "type": "string",
+            "format": "date-time"
+          },
+          "description": {
+            "nullable": true,
+            "type": "string"
+          },
+          "image": {
+            "nullable": true,
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PlanetImageRequestDto"
+              }
+            ]
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "PlanetControllerUpdateRequestDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "alienId": {
+            "nullable": true,
+            "type": "string"
+          },
+          "discoveryDate": {
+            "nullable": true,
+            "type": "string",
+            "format": "date-time"
+          },
+          "description": {
+            "nullable": true,
+            "type": "string"
+          },
+          "image": {
+            "nullable": true,
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PlanetImageRequestDto"
+              }
+            ]
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "DateRange": {
+        "type": "object",
+        "properties": {
+          "start": {
+            "nullable": true,
+            "type": "string",
+            "format": "date-time"
+          },
+          "end": {
+            "nullable": true,
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Label": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "label"
+        ]
+      },
+      "PaginationDto": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "nullable": true,
+            "type": "number"
+          },
+          "cursor": {
+            "nullable": true,
+            "type": "string"
+          },
+          "nextCursor": {
+            "nullable": true,
+            "type": "string"
+          },
+          "limit": {
+            "type": "number"
+          },
+          "totalItems": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "limit",
+          "totalItems"
+        ]
+      },
+      "PaginationQuery": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991,
+            "exclusiveMinimum": 0
+          },
+          "cursor": {
+            "nullable": true,
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/paginationCursor"
+              }
+            ]
+          },
+          "limit": {
+            "type": "number",
+            "maximum": 20,
+            "exclusiveMinimum": 0,
+            "default": 20
+          }
+        }
+      },
+      "paginationCursor": {
+        "type": "string",
+        "pattern": "^[A-Za-z_][A-Za-z0-9_]*(?::.+)?$"
+      },
+      "PlanetPaginateOrderParamEnum": {
+        "enum": [
+          "id",
+          "name",
+          "discoveryDate",
+          "createdAt",
+          "updatedAt"
+        ],
+        "type": "string",
+        "x-enumNames": [
+          "id",
+          "name",
+          "discoveryDate",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "MediaResourceName": {
+        "type": "string",
+        "minLength": 1,
+        "enum": [
+          "small-image",
+          "large-image",
+          "compressed-file",
+          "document",
+          "any",
+          "planet-image"
+        ]
+      },
+      "MediaUploadMethod": {
+        "type": "string",
+        "minLength": 1
+      },
+      "FakeMailDemoVariant": {
+        "enum": [
+          "text",
+          "html",
+          "recipients",
+          "sequence"
+        ],
+        "type": "string",
+        "x-enumNames": [
+          "text",
+          "html",
+          "recipients",
+          "sequence"
+        ]
+      },
+      "PlanetPaginateFilterParam": {
+        "nullable": true,
+        "type": "object",
+        "properties": {
+          "search": {
+            "type": "string"
+          },
+          "alienId": {
+            "nullable": true,
+            "type": "string"
+          },
+          "discoveryDate": {
+            "nullable": true,
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/DateRange"
+              }
+            ]
+          }
+        }
+      },
+      "PlanetPaginateOrderParam": {
+        "nullable": true,
+        "type": "string"
+      },
+      "PlanetImageDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "url"
+        ]
+      },
+      "PlanetsPaginateItemDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "alienId": {
+            "nullable": true,
+            "type": "string"
+          },
+          "discoveryDate": {
+            "nullable": true,
+            "type": "string",
+            "format": "date-time"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "nullable": true,
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "image": {
+            "nullable": true,
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PlanetImageDto"
+              }
+            ]
+          },
+          "creatorName": {
+            "type": "string"
+          },
+          "alienName": {
+            "type": "string"
+          },
+          "likesCount": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "likedByMe": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "userId",
+          "name",
+          "createdAt",
+          "updatedAt",
+          "likesCount",
+          "likedByMe"
+        ]
+      },
+      "PlanetImageRequestDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "paths": {
+    "/api/user/me": {
+      "get": {
+        "operationId": "UserMeController_get",
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserMeResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-bl": "Returns the authenticated user's profile for a valid access token.",
+        "x-acl": [
+          {
+            "action": "read",
+            "subject": "User"
+          }
+        ]
+      },
+      "put": {
+        "operationId": "UserMeController_update",
+        "tags": [
+          "User"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserMeUpdateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserMeResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-bl": "Updates the authenticated user's own name and email, enforcing unique email ownership, and returns the updated profile.",
+        "x-acl": [
+          {
+            "action": "update",
+            "subject": "User"
+          }
+        ]
+      }
+    },
+    "/api/user/push-tokens": {
+      "get": {
+        "operationId": "UserMePushTokensController_list",
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserPushTokensResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-bl": "Lists push notification tokens owned by the authenticated user."
+      },
+      "post": {
+        "operationId": "UserMePushTokensController_create",
+        "tags": [
+          "User"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserPushTokenCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserPushTokensCreateResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-bl": "Registers or refreshes a push notification token for the authenticated user."
+      }
+    },
+    "/api/user/push-tokens/{id}": {
+      "delete": {
+        "operationId": "UserMePushTokensController_remove",
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserPushTokensCreateResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-bl": "Deletes a push notification token only when owned by the authenticated user."
+      }
+    },
+    "/api/user/auth/magic-link": {
+      "get": {
+        "operationId": "UserAuthMagicLinkController_generate",
+        "tags": [
+          "User Auth"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "email"
+            },
+            "allowEmptyValue": true,
+            "allowReserved": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-bl": "For an existing local user, creates a short-lived single-use magic login code and emails a callback link containing type=magic and the code. Returns the same generic success message regardless of whether an identity exists to prevent account enumeration."
+      }
+    },
+    "/api/user/auth/magic-link/callback": {
+      "get": {
+        "operationId": "UserAuthMagicLinkController_consume",
+        "tags": [
+          "User Auth"
+        ],
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "allowEmptyValue": true,
+            "allowReserved": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthnTokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-bl": "Consumes a valid, unexpired, previously unused magic login code for an existing local user, permanently marks the code used, and returns access and refresh tokens. Rejects invalid, expired, or reused codes."
+      }
+    },
+    "/api/user/auth/login": {
+      "post": {
+        "operationId": "UserAuthLocalPasswordController_login",
+        "tags": [
+          "User Auth"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserAuthPasswordLoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthnTokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-bl": "Validates local user credentials and returns access and refresh tokens for authenticated API requests."
+      }
+    },
+    "/api/user/auth/register": {
+      "post": {
+        "operationId": "UserAuthLocalPasswordController_register",
+        "tags": [
+          "User Auth"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserAuthPasswordRegisterRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthnTokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-bl": "Validates registration input, enforces unique email, creates a local user, sends a welcome email to the registered address, and returns access and refresh tokens."
+      }
+    },
+    "/api/user/auth/refresh": {
+      "post": {
+        "operationId": "UserAuthJwtController_accessToken",
+        "tags": [
+          "User Auth"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthnTokenRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthnTokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-bl": "Validates a refresh token for an existing user and returns a new access and refresh token pair."
+      }
+    },
+    "/api/user/auth/google/callback": {
+      "get": {
+        "operationId": "UserAuthGoogleController_login",
+        "tags": [
+          "User Auth"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthnTokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-bl": "Completes Google authentication and returns access and refresh tokens."
+      }
+    },
+    "/api/user/auth/apple/callback": {
+      "get": {
+        "operationId": "UserAuthAppleController_login",
+        "tags": [
+          "User Auth"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthnTokenResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-bl": "Completes deterministic fake Apple authentication and returns access and refresh tokens."
+      }
+    },
+    "/api/user/auth/forgot-password": {
+      "post": {
+        "operationId": "UserAuthForgotPasswordController_requestReset",
+        "tags": [
+          "User Auth"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserAuthEmailGenerateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-bl": "For an existing user, creates a short-lived password reset code and emails it while preventing account enumeration."
+      }
+    },
+    "/api/user/auth/forgot-password/callback": {
+      "post": {
+        "operationId": "UserAuthForgotPasswordController_consumeReset",
+        "tags": [
+          "User Auth"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserAuthMagicConsumeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-bl": "Consumes a valid unused password reset code."
+      }
+    },
+    "/api/files/presigned-url": {
+      "post": {
+        "operationId": "MediaLibraryController_uploadRequest",
+        "tags": [
+          "Media"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MediaUploadRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaUploadInstructionsResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-media-upload": true,
+        "x-bl": "Validates an authenticated media upload request, creates a pending media record for an allowed resource, and returns upload instructions for sending the file bytes separately."
+      }
+    },
+    "/api/fake-mail/demo": {
+      "post": {
+        "operationId": "FakeMailController_sendDemo",
+        "tags": [
+          "Fake Mail"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FakeMailSendDemoBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FakeMailSendDemoResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-bl": "Creates demonstration email messages for the local fake-mailbox showcase."
+      }
+    },
+    "/api/aliens/labels": {
+      "get": {
+        "operationId": "AlienController_getLabels",
+        "tags": [
+          "Alien"
+        ],
+        "parameters": [
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "allowEmptyValue": true,
+            "allowReserved": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AliensGetLabelsResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-bl": "Lists up to 50 alien labels matching the optional search term by name, sorted by label.",
+        "x-acl": [
+          {
+            "action": "list",
+            "subject": "Alien"
+          }
+        ]
+      }
+    },
+    "/api/planets": {
+      "get": {
+        "operationId": "PlanetController_getAll",
+        "tags": [
+          "Planet"
+        ],
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/PlanetPaginateFilterParam"
+            },
+            "style": "deepObject",
+            "explode": true,
+            "allowEmptyValue": true,
+            "allowReserved": true
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "schema": {
+              "nullable": true,
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/PlanetPaginateOrderParam"
+                }
+              ]
+            },
+            "style": "deepObject",
+            "explode": true,
+            "allowEmptyValue": true,
+            "allowReserved": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-bl": "Lists planets, optionally searches by planet name, description, creator name, or alien name and filters by alien and discovery date range, sorts by the requested order with name as the default, and enriches each planet with creator name and alien name.",
+        "x-acl": [
+          {
+            "action": "list",
+            "subject": "Planet"
+          }
+        ]
+      },
+      "post": {
+        "operationId": "PlanetController_create",
+        "tags": [
+          "Planet"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlanetsCreateRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlanetsGetResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-bl": "Creates a planet owned by the authenticated user and optionally assigns an existing alien.",
+        "x-acl": [
+          {
+            "action": "create",
+            "subject": "Planet"
+          }
+        ]
+      }
+    },
+    "/api/planets/paginate": {
+      "get": {
+        "operationId": "PlanetController_paginate",
+        "tags": [
+          "Planet"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": -9007199254740991,
+              "maximum": 9007199254740991,
+              "exclusiveMinimum": 0
+            },
+            "allowEmptyValue": true,
+            "allowReserved": true
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "schema": {
+              "nullable": true,
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/paginationCursor"
+                }
+              ]
+            },
+            "style": "deepObject",
+            "explode": true,
+            "allowEmptyValue": true,
+            "allowReserved": true
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "maximum": 20,
+              "exclusiveMinimum": 0,
+              "default": 20
+            },
+            "allowEmptyValue": true,
+            "allowReserved": true
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/PlanetPaginateFilterParam"
+            },
+            "style": "deepObject",
+            "explode": true,
+            "allowEmptyValue": true,
+            "allowReserved": true
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "schema": {
+              "nullable": true,
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/PlanetPaginateOrderParam"
+                }
+              ]
+            },
+            "style": "deepObject",
+            "explode": true,
+            "allowEmptyValue": true,
+            "allowReserved": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlanetsPaginateItemPaginationResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-bl": "Lists planets in page-based slices, optionally searches by planet name, description, creator name, or alien name and filters by alien and discovery date range before pagination, sorts by the requested order with name as the default, enriches each planet with creator name and alien name, and returns pagination metadata for incremental loading.",
+        "x-acl": [
+          {
+            "action": "list",
+            "subject": "Planet"
+          }
+        ]
+      }
+    },
+    "/api/planets/{id}": {
+      "get": {
+        "operationId": "PlanetController_getById",
+        "tags": [
+          "Planet"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlanetsGetResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-bl": "Finds one planet by ID and enriches it with creator name and alien name, returning not found when it does not exist.",
+        "x-acl": [
+          {
+            "action": "read",
+            "subject": "Planet"
+          }
+        ]
+      },
+      "put": {
+        "operationId": "PlanetController_update",
+        "tags": [
+          "Planet"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlanetControllerUpdateRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlanetsGetResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-bl": "Updates a planet only when the authenticated user owns it, optionally assigns an existing alien, and returns it with creator name and alien name.",
+        "x-acl": [
+          {
+            "action": "update",
+            "subject": "Planet"
+          }
+        ]
+      },
+      "delete": {
+        "operationId": "PlanetController_delete",
+        "tags": [
+          "Planet"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-bl": "Deletes a planet only when the authenticated user owns it.",
+        "x-acl": [
+          {
+            "action": "delete",
+            "subject": "Planet"
+          }
+        ]
+      }
+    },
+    "/api/planets/{id}/like": {
+      "post": {
+        "operationId": "PlanetController_like",
+        "tags": [
+          "Planet"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlanetsGetResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-bl": "Likes a planet for the authenticated user and returns the enriched planet with like metadata.",
+        "x-acl": [
+          {
+            "action": "like",
+            "subject": "Planet"
+          }
+        ]
+      },
+      "delete": {
+        "operationId": "PlanetController_unlike",
+        "tags": [
+          "Planet"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlanetsGetResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-bl": "Removes the authenticated user's like from a planet and returns the enriched planet with like metadata.",
+        "x-acl": [
+          {
+            "action": "like",
+            "subject": "Planet"
+          }
+        ]
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "common",
+      "x-robodev-hidden": true
+    },
+    {
+      "name": "User",
+      "x-robodev-hidden": true,
+      "x-robodev-owned-tables": [
+        "User",
+        "PushNotificationToken"
+      ]
+    },
+    {
+      "name": "User Auth",
+      "x-robodev-hidden": true,
+      "x-robodev-owned-tables": [
+        "AuthnIdentity",
+        "AuthnNonce"
+      ]
+    },
+    {
+      "name": "Media",
+      "x-robodev-hidden": true,
+      "x-robodev-owned-tables": [
+        "Media"
+      ]
+    },
+    {
+      "name": "Fake Mail",
+      "x-robodev-hidden": true,
+      "x-robodev-owned-tables": [
+        "Mail"
+      ]
+    },
+    {
+      "name": "Alien",
+      "x-robodev-hidden": true,
+      "x-robodev-owned-tables": [
+        "Alien"
+      ]
+    },
+    {
+      "name": "Planet",
+      "x-robodev-hidden": true,
+      "x-robodev-owned-tables": [
+        "Planet",
+        "PlanetLike"
+      ],
+      "x-robodev-media-resources": [
+        {
+          "name": "planet-image",
+          "field": "imageId",
+          "dtoField": "image",
+          "mimeTypes": [
+            "image/jpeg",
+            "image/png",
+            "image/webp"
+          ],
+          "maxFileSize": 2097152
+        }
+      ]
+    }
+  ],
+  "x-robodev-user-roles": [
+    {
+      "name": "CLIENT",
+      "description": "Default role for regular users",
+      "isDefault": true
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Povio UI Styling"
+  short_description: "Required first for all apps/fe UI work"
+  default_prompt: "Use $povio-ui-styling first for this apps/fe UI task, preserving @povio/ui primitives before applying other frontend guidance."

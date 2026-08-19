@@ -1,0 +1,18 @@
+{
+  "$schema": "https://github.com/dyoshikawa/rulesync/releases/latest/download/config-schema.json",
+  "targets": {
+    "cursor": ["rules", "skills"],
+    "claudecode": ["rules", "skills"],
+    "codexcli": ["rules", "skills"],
+  },
+  "outputRoots": ["."],
+  // Clean stale outputs when source rules are removed. All sources live under .rulesync/.
+  "delete": true,
+  "verbose": false,
+  "silent": false,
+  "global": false,
+  "simulateCommands": false,
+  "simulateSubagents": false,
+  "simulateSkills": false,
+  "gitignoreTargetsOnly": true,
+}

@@ -1,0 +1,16 @@
+export default {
+  useTabs: false,
+  tabWidth: 2,
+  printWidth: 120,
+  singleQuote: false,
+  jsxSingleQuote: false,
+  quoteProps: "as-needed",
+  trailingComma: "all",
+  semi: true,
+  arrowParens: "always",
+  bracketSameLine: false,
+  bracketSpacing: true,
+  singleAttributePerLine: true,
+  ignorePatterns: ["node_modules", "dist", "out", ".turbo", ".next", "routeTree.gen.ts", "openapi.generated.json"],
+  overrides: [{ files: ["apps/be/**/*.{js,jsx,ts,tsx}"], options: { singleQuote: true } }],
+};
